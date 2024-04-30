@@ -1,35 +1,53 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import AnswerForm from "./components/AnswerForm";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const URL = "https://questions-server.adaptable.app/questions";
+  const [questions, setQuestions] = useState(null);
+  const [err, setErr] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const refreshQuestions = () => {
+    axios
+      .get(URL)
+      .then((resp) => setQuestions(resp.data))
+      .catch((err) => setErr(err))
+      .finally(() => setIsLoading(false));
+  };
+
+  useEffect(() => {
+    refreshQuestions();
+  }, []);
+
+  const handleOnSubmit = (questionInput) => {
+    const requestBody = { id: Date.now(), text: questionInput };
+    axios.post(URL, requestBody).then((resp) => {
+      console.log(resp);
+      refreshQuestions();
+    });
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (err) return <div>Opps!</div>;
 
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <b>Questions</b>
+        {questions.map((question) => {
+          return <p key={question.id}> {question.text}</p>;
+        })}
+        <hr />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <AnswerForm
+        refreshQuestions={refreshQuestions}
+        handleOnSubmit={handleOnSubmit}
+      />
+      ;
     </>
-  )
+  );
 }
 
-export default App
+export default App;
