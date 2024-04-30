@@ -1,51 +1,24 @@
 import "./App.css";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import AnswerForm from "./components/AnswerForm";
+import { Routes, Route } from "react-router-dom";
+import AboutPage from "./pages/AboutPage";
+import AvatarPage from "./pages/AvatarPage";
+import HomePage from "./pages/HomePage";
+import InstructionPage from "./pages/InstructionPage";
+import LoadingPage from "./pages/LoadingPage";
+import ResultsPage from "./pages/ResultsPage";
 
 function App() {
-  const URL = "https://questions-server.adaptable.app/questions";
-  const [questions, setQuestions] = useState(null);
-  const [err, setErr] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const refreshQuestions = () => {
-    axios
-      .get(URL)
-      .then((resp) => setQuestions(resp.data))
-      .catch((err) => setErr(err))
-      .finally(() => setIsLoading(false));
-  };
-
-  useEffect(() => {
-    refreshQuestions();
-  }, []);
-
-  const handleOnSubmit = (questionInput) => {
-    const requestBody = { id: Date.now(), text: questionInput };
-    axios.post(URL, requestBody).then((resp) => {
-      console.log(resp);
-      refreshQuestions();
-    });
-  };
-
-  if (isLoading) return <div>Loading...</div>;
-  if (err) return <div>Opps!</div>;
-
   return (
     <>
-      <div>
-        <b>Questions</b>
-        {questions.map((question) => {
-          return <p key={question.id}> {question.text}</p>;
-        })}
-        <hr />
-      </div>
-      <AnswerForm
-        refreshQuestions={refreshQuestions}
-        handleOnSubmit={handleOnSubmit}
-      />
-      ;
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/choose-avatar" element={<AvatarPage />} />
+        <Route path="/instructions" element={<InstructionPage />} />
+        <Route path="/loading" element={<LoadingPage />} />
+        <Route path="/results" element={<ResultsPage />} />
+        {/* <Route path="/:{questionId}" element={<QuestionPage />} /> */}
+      </Routes>
     </>
   );
 }
