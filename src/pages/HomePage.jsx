@@ -4,14 +4,16 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-4xl mb-8">Hello!</h1>
-      <Link to="/about">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4">
-          About
-        </button>
-      </Link>
+      <h1 className="text-5xl mb-8 text-white">Hello!</h1>
+      <div className="absolute bottom-0 left-0 mb-6 ml-6">
+        <Link to="/about">
+          <button className="about-button">
+            <span className="plus">About</span>
+          </button>
+        </Link>
+      </div>
       <Link to="/choose-avatar">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <button className="bg-customPink hover:bg-customPinkHover text-white font-bold px-6 rounded-full w-48 h-12">
           Next
         </button>
       </Link>

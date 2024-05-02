@@ -11,3 +11,37 @@
   margin: 100px auto;
   width: 400px;
 }
+
+body {
+  background-color: black;
+}
+
+/* About button animation */
+.about-button {
+  background-color: #1fcf6a;
+  color: white;
+  font-weight: bold;
+  border-radius: 9999px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.3s;
+}
+
+.about-button:hover {
+  width: 100px;
+}
+
+.plus {
+  transition: opacity 0.3s;
+}
+
+.about-button:hover .plus {
+  opacity: 1;
+}
+
+.plus {
+  opacity: 0;
+}
