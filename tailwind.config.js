@@ -8,6 +8,8 @@ export default {
         customPinkHover: "#FF78AB",
         customGreen: "#1FCF6A",
         customGreenHover: "#19AB5B",
+        customBlue: "#0169FF",
+        ustomGBlueHover: "#123456",
       },
     },
     fontSize: {

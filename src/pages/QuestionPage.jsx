@@ -13,6 +13,7 @@ function QuestionPage() {
   const [questionOptions, setQuestionOptions] = useState(null);
   const [answerInput, setAnswerInput] = useState("");
   const [err, setErr] = useState(null);
+  const totalQuestions = 4;
 
   useEffect(() => {
     axios
@@ -53,38 +54,46 @@ function QuestionPage() {
       </div>
     );
   return (
-    <div className="flex flex-col items-center justify-center h-screen space-y-4 ">
-      <div className="space-grotesk text-4xl px-4">{questionText}</div>
-      {!questionOptions && (
-        <input
-          type="text"
-          value={answerInput}
-          onChange={handleOnChange}
-          className="p-2 border border-gray-300 rounded-full w-64 h-16"
-        />
-      )}
-      {questionOptions && (
-        <div className="flex flex-col items-start space-y-2">
-          {questionOptions
-            .slice()
-            .reverse()
-            .map((option) => (
-              <RadioButton
-                key={option}
-                value={option}
-                questionText={questionText}
-                handleOnChange={handleOnChange}
-              />
-            ))}
-        </div>
-      )}
-      <button
-        type="submit"
-        onClick={handleSendAnswer}
-        className="bg-customPink hover:bg-customPinkHover text-white font-bold px-6 rounded-full w-48 h-12 lexend-deca"
-      >
-        Next
-      </button>
+    <div>
+      <div className="h-2 bg-gray-100 w-full">
+        <div
+          className="h-full bg-customBlue rounded-full"
+          style={{ width: `${(order / totalQuestions) * 100}%` }}
+        ></div>
+      </div>
+      <div className="flex flex-col items-center justify-center h-screen space-y-4 ">
+        <div className="space-grotesk text-4xl px-4">{questionText}</div>
+        {!questionOptions && (
+          <input
+            type="text"
+            value={answerInput}
+            onChange={handleOnChange}
+            className="p-2 border border-gray-300 rounded-full w-64 h-16"
+          />
+        )}
+        {questionOptions && (
+          <div className="flex flex-col items-start space-y-2">
+            {questionOptions
+              .slice()
+              .reverse()
+              .map((option) => (
+                <RadioButton
+                  key={option}
+                  value={option}
+                  questionText={questionText}
+                  handleOnChange={handleOnChange}
+                />
+              ))}
+          </div>
+        )}
+        <button
+          type="submit"
+          onClick={handleSendAnswer}
+          className="bg-customPink hover:bg-customPinkHover text-white font-bold px-6 rounded-full w-48 h-12 lexend-deca"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }
