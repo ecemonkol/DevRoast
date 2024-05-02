@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 function InstructionPage() {
+  const { surveyId } = useParams();
   return (
     <div>
       <div>
@@ -10,7 +12,7 @@ function InstructionPage() {
         answer, we'll capture and project data for instant enjoyment. Let’s make
         this interactive session a highlight of our cohort!"
       </div>
-      <Link to="/1">
+      <Link to={`/instructions/${surveyId}/0`}>
         <button>START</button>
       </Link>
     </div>
