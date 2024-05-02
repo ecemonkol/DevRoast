@@ -1,6 +1,6 @@
 import React from "react";
 
-function RadioButton({ value, questionText, handleOnChange }) {
+function RadioOption({ value, questionText, handleOnChange }) {
   return (
     <label>
       {value}
@@ -15,4 +15,4 @@ function RadioButton({ value, questionText, handleOnChange }) {
   );
 }
 
-export default RadioButton;
+export default RadioOption;
