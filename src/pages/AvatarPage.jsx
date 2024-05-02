@@ -13,7 +13,6 @@ function ChooseAvatar() {
       avatar: e.target.src,
     };
     navigate("/choose-mode");
-    localStorage.setItem("user", JSON.stringify(newUser));
   };
   return (
     <div className="choose-avatar">

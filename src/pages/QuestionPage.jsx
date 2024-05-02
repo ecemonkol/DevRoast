@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 const URLquestions = "https://questions-server.adaptable.app/questions";
 const URLanswers = "https://questions-server.adaptable.app/answers";
 
 function QuestionPage() {
   const navigate = useNavigate();
-  const { questionId } = useParams();
+  const { surveyId } = useParams();
+  const { questionNum } = useParams();
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [answerInput, setAnswerInput] = useState("");
   const [err, setErr] = useState(null);
 
   useEffect(() => {
     axios
-      .get(URLquestions + "/" + questionId)
-      .then((resp) => setCurrentQuestion(resp.data.text))
+      .get(`${URLquestions}?surveyId=${surveyId}`)
+      .then((resp) => {
+        setCurrentQuestion(resp.data[questionNum].text);
+      })
       .catch((err) => setErr(err));
-  }, [questionId]);
+  }, [questionNum]);
 
   const handleOnChange = (e) => {
     setAnswerInput(e.target.value);
@@ -26,11 +28,12 @@ function QuestionPage() {
     const requestBody = {
       id: Date.now(),
       answer_text: answerInput,
-      questionId: +questionId,
+      questionNum: +questionNum,
+      surveyIdId: +surveyId,
     };
     axios.post(URLanswers, requestBody).then((resp) => {
-      const nextQuestionId = parseInt(questionId) + 1;
-      navigate(`/${nextQuestionId}`);
+      const nextQuestionNum = parseInt(questionNum) + 1;
+      navigate(`/instructions/${surveyId}/${nextQuestionNum}`);
     });
   };
 
@@ -38,37 +41,36 @@ function QuestionPage() {
   return (
     <div>
       {currentQuestion}
-      <input type="text" value={answerInput} onChange={handleOnChange} />
-
-      <div className="optionsQuestion" onChange={handleOnChange}>
-        <legend>
-          If Omar were a function, what would his return statement be?
-        </legend>
-        <div>
-          <input
-            type="radio"
-            id="option1"
-            name={`question${questionId}`}
-            value="email"
-          />
-          <label for="option1">DON'T REPEAT YOURSELF!</label>
-          <input
-            type="radio"
-            id="option2"
-            name={`question${questionId}`}
-            value="phone"
-          />
-          <label for="option2">just false</label>
-          <input
-            type="radio"
-            id="option3"
-            name={`question${questionId}`}
-            value="mail"
-          />
-          <label for="option3">Error</label>
+      {questionNum !== "2" && (
+        <input type="text" value={answerInput} onChange={handleOnChange} />
+      )}
+      {questionNum === "2" && (
+        <div className="optionsQuestion" onChange={handleOnChange}>
+          <div>
+            <input
+              type="radio"
+              id="option1"
+              name={`question${questionNum}`}
+              value="email"
+            />
+            <label htmlFor="option1">DON'T REPEAT YOURSELF!</label>
+            <input
+              type="radio"
+              id="option2"
+              name={`question${questionNum}`}
+              value="phone"
+            />
+            <label htmlFor="option2">just false</label>
+            <input
+              type="radio"
+              id="option3"
+              name={`question${questionNum}`}
+              value="mail"
+            />
+            <label htmlFor="option3">Error</label>
+          </div>
         </div>
-      </div>
-
+      )}
       <button type="submit" onClick={handleSendAnswer}>
         Next
       </button>
@@ -80,6 +82,6 @@ export default QuestionPage;
 
 // "/"
 // "/choose-avatar"
-// "/surveys"
-// "/surverys/instruction/:surveyID"
-// "/surveys/:surveyID/start/:pageNumber"
+// "/choose-mode"
+// "/choose-mode/instruction/:surveyID"
+// "/choose-mode/:surveyID/start/:pageNumber"

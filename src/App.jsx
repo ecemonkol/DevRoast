@@ -17,10 +17,14 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/choose-avatar" element={<AvatarPage />} />
         <Route path="/choose-mode" element={<ChooseMode />} />
-        <Route path="/instructions" element={<InstructionPage />} />
+        <Route path="/instructions/:surveyId" element={<InstructionPage />} />
+        <Route path="/:surveyId/:questionNum" element={<QuestionPage />} />
+        <Route
+          path="/instructions/:surveyId/:questionNum"
+          element={<QuestionPage />}
+        />
         <Route path="/loading" element={<LoadingPage />} />
         <Route path="/results" element={<ResultsPage />} />
-        <Route path="/:questionId" element={<QuestionPage />} />
       </Routes>
     </>
   );

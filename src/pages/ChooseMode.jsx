@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 function ChooseMode() {
   const navigate = useNavigate();
   const handleClick = (e) => {
-    console.log(e.target.value);
-    navigate("/instructions");
+    const surveyId = e.target.value;
+    navigate(`/${surveyId}/${questionNum}`);
   };
   return (
     <div>
