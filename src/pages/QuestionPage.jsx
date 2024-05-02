@@ -80,17 +80,13 @@ function QuestionPage() {
       {questionOptions && (
         <div className="flex flex-col items-start space-y-2">
           {questionOptions.map((option) => (
-            <div
+            <RadioOption
               key={option}
-              className="optionsQuestion"
-              onChange={handleOnChange}
-            >
-              <RadioOption 
-                value={option}
-                questionText={questionText}
-                handleOnChange={handleOnChange}
-              />
-            ))}
+              value={option}
+              questionText={questionText}
+              handleOnChange={handleOnChange}
+            />
+          ))}
         </div>
       )}
       <button
