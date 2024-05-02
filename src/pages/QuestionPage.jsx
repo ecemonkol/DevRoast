@@ -66,15 +66,7 @@ function QuestionPage() {
         Opps, something went wrong.
       </div>
     );
-  if (err)
-    return (
-      <div className="flex flex-col items-center justify-center h-screen space-y-4 ">
-        Opps, something went wrong.
-      </div>
-    );
   return (
-    <div className="flex flex-col items-center justify-center h-screen space-y-4 ">
-      <div className="space-grotesk text-4xl px-4">{questionText}</div>
     <div className="flex flex-col items-center justify-center h-screen space-y-4 ">
       <div className="space-grotesk text-4xl px-4">{questionText}</div>
       {!questionOptions && (
@@ -84,15 +76,8 @@ function QuestionPage() {
           onChange={handleOnChange}
           className="p-2 border border-gray-300 rounded-full w-64 h-16"
         />
-        <input
-          type="text"
-          value={answerInput}
-          onChange={handleOnChange}
-          className="p-2 border border-gray-300 rounded-full w-64 h-16"
-        />
       )}
       {questionOptions && (
-        <div className="flex flex-col items-start space-y-2">
         <div className="flex flex-col items-start space-y-2">
           {questionOptions.map((option) => (
             <RadioOption
