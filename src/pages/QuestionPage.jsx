@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import RadioButton from "../components/RadioButton";
 const URLquestions = "https://questions-server.adaptable.app/questions";
 
 function QuestionPage() {
@@ -55,29 +56,10 @@ function QuestionPage() {
       )}
       {questionOptions && (
         <div className="optionsQuestion" onChange={handleOnChange}>
-          <div>
-            <input
-              type="radio"
-              id="option1"
-              name={`question${order}`}
-              value="email" //fetch from questions option
-            />
-            <label htmlFor="option1">DON'T REPEAT YOURSELF!</label>
-            <input
-              type="radio"
-              id="option2"
-              name={`question${order}`}
-              value="phone"
-            />
-            <label htmlFor="option2">just false</label>
-            <input
-              type="radio"
-              id="option3"
-              name={`question${order}`}
-              value="mail"
-            />
-            <label htmlFor="option3">Error</label>
-          </div>
+          //map over options
+          {questionOptions.map((option) => {
+            return <RadioButton key={option} value={option} />;
+          })}
         </div>
       )}
       <button type="submit" onClick={handleSendAnswer}>
