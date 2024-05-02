@@ -8,7 +8,7 @@ function QuestionPage() {
   const navigate = useNavigate();
   const { type } = useParams();
   const { order } = useParams();
-  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [questionText, setQuestionText] = useState(null);
   const [questionId, setQuestionId] = useState(null);
   const [questionOptions, setQuestionOptions] = useState(null);
   const [answerInput, setAnswerInput] = useState("");
@@ -18,7 +18,7 @@ function QuestionPage() {
     axios
       .get(`${URLquestions}?order=${order}&type=${type}`)
       .then((resp) => {
-        setCurrentQuestion(resp.data[0].text);
+        setQuestionText(resp.data[0].text);
         setQuestionId(resp.data[0].id);
         console.log(resp.data[0].options);
         setQuestionOptions(resp.data[0].options);
@@ -34,7 +34,6 @@ function QuestionPage() {
       .get(`${URLquestions}/${questionId}`)
       .then((resp) => {
         const question = resp.data;
-        console.log(question);
         if (!question.answers) {
           question.answers = [];
         }
@@ -50,16 +49,26 @@ function QuestionPage() {
   if (err) return <div>Opps, something went wrong.</div>;
   return (
     <div>
-      {currentQuestion}
+      {questionText}
       {!questionOptions && (
         <input type="text" value={answerInput} onChange={handleOnChange} />
       )}
       {questionOptions && (
-        <div className="optionsQuestion" onChange={handleOnChange}>
-          //map over options
-          {questionOptions.map((option) => {
-            return <RadioButton key={option} value={option} />;
-          })}
+        <div>
+          {questionOptions.map((option) => (
+            <div
+              key={option}
+              className="optionsQuestion"
+              onChange={handleOnChange}
+            >
+              <RadioButton
+                value={option}
+                questionText={questionText}
+                handleOnChange={handleOnChange}
+              />
+              ;
+            </div>
+          ))}
         </div>
       )}
       <button type="submit" onClick={handleSendAnswer}>

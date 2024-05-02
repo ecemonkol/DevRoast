@@ -1,14 +1,15 @@
 import React from "react";
 
-function RadioButton({ value }) {
+function RadioButton({ value, questionText, handleOnChange }) {
   return (
     <label>
-      DON'T REPEAT YOURSELF!
+      {value}
       <input
         type="radio"
         id={value}
-        name={`question${order}`}
-        value={value} //fetch from questions option
+        name={questionText}
+        value={value}
+        onChange={handleOnChange}
       />
     </label>
   );
