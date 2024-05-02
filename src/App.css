@@ -13,7 +13,7 @@
 }
 
 body {
-  background-color: black;
+  background-color: white;
 }
 
 /* About button animation */
@@ -44,4 +44,19 @@ body {
 
 .plus {
   opacity: 0;
+}
+
+.space-grotesk {
+  /* Apply the Space Grotesk font and specify font weights */
+  font-family: "Space Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700; /* You can adjust the font weight as needed */
+  font-style: normal;
+}
+
+.lexend-deca {
+  font-family: "Lexend Deca", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
 }
