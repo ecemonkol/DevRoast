@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import RadioButton from "../components/RadioButton";
+import RadioOption from "../components/RadioOption";
 const URLquestions = "https://questions-server.adaptable.app/questions";
 
 function QuestionPage() {
@@ -11,20 +11,30 @@ function QuestionPage() {
   const [questionText, setQuestionText] = useState(null);
   const [questionId, setQuestionId] = useState(null);
   const [questionOptions, setQuestionOptions] = useState(null);
+  const [lastQuestionIndex, setLastQuestionIndex] = useState(null);
   const [answerInput, setAnswerInput] = useState("");
   const [err, setErr] = useState(null);
 
   useEffect(() => {
     axios
-      .get(`${URLquestions}?order=${order}&type=${type}`)
+      .get(`${URLquestions}?type=${type}&order=${order}`)
       .then((resp) => {
         setQuestionText(resp.data[0].text);
         setQuestionId(resp.data[0].id);
-        console.log(resp.data[0].options);
         setQuestionOptions(resp.data[0].options);
       })
       .catch((err) => setErr(err));
   }, [order, type]);
+
+  useEffect(() => {
+    axios
+      .get(`${URLquestions}?type=${type}`)
+      .then((resp) => {
+        setLastQuestionIndex(resp.data.length);
+        console.log(resp.data.length);
+      })
+      .catch((err) => setErr(err));
+  }, [type]);
 
   const handleOnChange = (e) => {
     setAnswerInput(e.target.value);
@@ -41,8 +51,12 @@ function QuestionPage() {
         return axios.patch(`${URLquestions}/${questionId}`, question);
       })
       .then((resp) => {
-        const nextQuestion = parseInt(order) + 1;
-        navigate(`/${type}/${nextQuestion}`);
+        if (order != lastQuestionIndex) {
+          const nextQuestion = parseInt(order) + 1;
+          navigate(`/${type}/${nextQuestion}`);
+        } else {
+          navigate(`/${type}/loading`);
+        }
       });
   };
 
@@ -65,12 +79,13 @@ function QuestionPage() {
       )}
       {questionOptions && (
         <div className="flex flex-col items-start space-y-2">
-          {questionOptions
-            .slice()
-            .reverse()
-            .map((option) => (
-              <RadioButton
-                key={option}
+          {questionOptions.map((option) => (
+            <div
+              key={option}
+              className="optionsQuestion"
+              onChange={handleOnChange}
+            >
+              <RadioOption 
                 value={option}
                 questionText={questionText}
                 handleOnChange={handleOnChange}
