@@ -46,32 +46,43 @@ function QuestionPage() {
       });
   };
 
-  if (err) return <div>Opps, something went wrong.</div>;
+  if (err)
+    return (
+      <div className="flex flex-col items-center justify-center h-screen space-y-4 ">
+        Opps, something went wrong.
+      </div>
+    );
   return (
-    <div>
-      {questionText}
+    <div className="flex flex-col items-center justify-center h-screen space-y-4 ">
+      <div className="space-grotesk text-4xl px-4">{questionText}</div>
       {!questionOptions && (
-        <input type="text" value={answerInput} onChange={handleOnChange} />
+        <input
+          type="text"
+          value={answerInput}
+          onChange={handleOnChange}
+          className="p-2 border border-gray-300 rounded-full w-64 h-16"
+        />
       )}
       {questionOptions && (
-        <div>
-          {questionOptions.map((option) => (
-            <div
-              key={option}
-              className="optionsQuestion"
-              onChange={handleOnChange}
-            >
+        <div className="flex flex-col items-start space-y-2">
+          {questionOptions
+            .slice()
+            .reverse()
+            .map((option) => (
               <RadioButton
+                key={option}
                 value={option}
                 questionText={questionText}
                 handleOnChange={handleOnChange}
               />
-              ;
-            </div>
-          ))}
+            ))}
         </div>
       )}
-      <button type="submit" onClick={handleSendAnswer}>
+      <button
+        type="submit"
+        onClick={handleSendAnswer}
+        className="bg-customPink hover:bg-customPinkHover text-white font-bold px-6 rounded-full w-48 h-12 lexend-deca"
+      >
         Next
       </button>
     </div>

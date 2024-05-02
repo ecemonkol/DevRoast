@@ -15,11 +15,31 @@ function ChooseAvatar() {
     navigate("/choose-mode");
   };
   return (
-    <div className="choose-avatar">
-      <h1>Tell us who you are</h1>
-      <img src={avatar1} alt="image1" onClick={handleClick} width={50} />
-      <img src={avatar2} alt="image2" onClick={handleClick} width={50} />
-      <img src={avatar3} alt="image3" onClick={handleClick} width={50} />
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h1 className="text-4xl mb-4 space-grotesk">Tell us who you are:</h1>
+      <div className="flex justify-center">
+        <img
+          src={avatar1}
+          alt="image1"
+          onClick={handleClick}
+          className="cursor-pointer"
+          width={50}
+        />
+        <img
+          src={avatar2}
+          alt="image2"
+          onClick={handleClick}
+          className="cursor-pointer ml-4"
+          width={50}
+        />
+        <img
+          src={avatar3}
+          alt="image3"
+          onClick={handleClick}
+          className="cursor-pointer ml-4"
+          width={50}
+        />
+      </div>
     </div>
   );
 }
