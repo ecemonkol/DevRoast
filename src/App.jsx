@@ -17,12 +17,8 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/choose-avatar" element={<AvatarPage />} />
         <Route path="/choose-mode" element={<ChooseMode />} />
-        <Route path="/instructions/:surveyId" element={<InstructionPage />} />
-        <Route path="/:surveyId/:questionNum" element={<QuestionPage />} />
-        <Route
-          path="/instructions/:surveyId/:questionNum"
-          element={<QuestionPage />}
-        />
+        <Route path="/instructions/:type" element={<InstructionPage />} />
+        <Route path="/:type/:order" element={<QuestionPage />} />
         <Route path="/loading" element={<LoadingPage />} />
         <Route path="/results" element={<ResultsPage />} />
       </Routes>
