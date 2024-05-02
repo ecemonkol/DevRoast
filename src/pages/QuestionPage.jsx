@@ -87,17 +87,14 @@ function QuestionPage() {
         )}
         {questionOptions && (
           <div className="flex flex-col items-start space-y-2">
-            {questionOptions
-              .slice()
-              .reverse()
-              .map((option) => (
-                <RadioButton
-                  key={option}
-                  value={option}
-                  questionText={questionText}
-                  handleOnChange={handleOnChange}
-                />
-              ))}
+            {questionOptions.map((option) => (
+              <RadioOption
+                key={option}
+                value={option}
+                questionText={questionText}
+                handleOnChange={handleOnChange}
+              />
+            ))}
           </div>
         )}
         <button
