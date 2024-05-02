@@ -19,8 +19,8 @@ function App() {
         <Route path="/choose-mode" element={<ChooseMode />} />
         <Route path="/instructions/:type" element={<InstructionPage />} />
         <Route path="/:type/:order" element={<QuestionPage />} />
-        <Route path="/loading" element={<LoadingPage />} />
-        <Route path="/results" element={<ResultsPage />} />
+        <Route path="/:type/loading" element={<LoadingPage />} />
+        <Route path="/:type/results" element={<ResultsPage />} />
       </Routes>
     </>
   );
