@@ -6,17 +6,15 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function ChooseAvatar() {
-  const URL = "https://questions-server.adaptable.app/users";
   const navigate = useNavigate();
 
-  const newUser = {
-    id: Date.now(),
-  };
-
   const handleClick = (e) => {
-    axios.post(URL, newUser).then((resp) => {
-      navigate("/");
-    });
+    const newUser = {
+      id: Date.now(),
+      avatar: e.target.src,
+    };
+    navigate("/1");
+    localStorage.setItem("user", JSON.stringify(newUser));
   };
   return (
     <div className="choose-avatar">
