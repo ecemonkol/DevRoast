@@ -1,4 +1,5 @@
 import "./App.css";
+// import "./index.css";
 import { Routes, Route } from "react-router-dom";
 import AboutPage from "./pages/AboutPage";
 import AvatarPage from "./pages/AvatarPage";
