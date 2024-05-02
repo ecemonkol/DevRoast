@@ -3,7 +3,6 @@ import avatar1 from "../assets/avatars/avatar1.png";
 import avatar2 from "../assets/avatars/avatar2.png";
 import avatar3 from "../assets/avatars/avatar3.png";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 function ChooseAvatar() {
   const navigate = useNavigate();
@@ -13,8 +12,7 @@ function ChooseAvatar() {
       id: Date.now(),
       avatar: e.target.src,
     };
-    navigate("/1");
-    localStorage.setItem("user", JSON.stringify(newUser));
+    navigate("/choose-mode");
   };
   return (
     <div className="choose-avatar">
