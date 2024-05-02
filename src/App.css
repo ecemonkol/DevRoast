@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .form {
   display: flex;
   flex-direction: column;
@@ -6,4 +10,53 @@
 .main {
   margin: 100px auto;
   width: 400px;
+}
+
+body {
+  background-color: white;
+}
+
+/* About button animation */
+.about-button {
+  background-color: #1fcf6a;
+  color: white;
+  font-weight: bold;
+  border-radius: 9999px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.3s;
+}
+
+.about-button:hover {
+  width: 100px;
+}
+
+.plus {
+  transition: opacity 0.3s;
+}
+
+.about-button:hover .plus {
+  opacity: 1;
+}
+
+.plus {
+  opacity: 0;
+}
+
+.space-grotesk {
+  /* Apply the Space Grotesk font and specify font weights */
+  font-family: "Space Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700; /* You can adjust the font weight as needed */
+  font-style: normal;
+}
+
+.lexend-deca {
+  font-family: "Lexend Deca", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
 }
