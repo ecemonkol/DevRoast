@@ -14,6 +14,7 @@ function QuestionPage() {
   const [lastQuestionIndex, setLastQuestionIndex] = useState(null);
   const [answerInput, setAnswerInput] = useState("");
   const [err, setErr] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const totalQuestions = 4;
 
   useEffect(() => {
@@ -24,7 +25,8 @@ function QuestionPage() {
         setQuestionId(resp.data[0].id);
         setQuestionOptions(resp.data[0].options);
       })
-      .catch((err) => setErr(err));
+      .catch((err) => setErr(err))
+      .finally(() => setIsLoading(false));
   }, [order, type]);
 
   useEffect(() => {
@@ -65,6 +67,12 @@ function QuestionPage() {
     return (
       <div className="flex flex-col items-center justify-center h-screen space-y-4 ">
         Opps, something went wrong.
+      </div>
+    );
+  if (isLoading)
+    return (
+      <div className="flex flex-col items-center justify-center h-screen space-y-4 ">
+        Loading...
       </div>
     );
   return (
