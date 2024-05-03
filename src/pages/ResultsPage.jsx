@@ -32,9 +32,9 @@ function ResultsPage() {
       );
 
       Promise.all(promises)
-        .then((responses) => {
+        .then((arr) => {
           const newResults = {};
-          responses.forEach((resp, index) => {
+          arr.forEach((resp, index) => {
             const allAnswers = [];
             resp.data.forEach((answer) => allAnswers.push(answer.answerText));
             newResults[questions[index].text] = allAnswers;
