@@ -15,6 +15,7 @@ function QuestionPage() {
   const [answerInput, setAnswerInput] = useState("");
   const [err, setErr] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [timer, setTimer] = useState(10);
 
   useEffect(() => {
     axios
@@ -23,10 +24,26 @@ function QuestionPage() {
         setQuestionText(resp.data[0].text);
         setQuestionId(resp.data[0].id);
         setQuestionOptions(resp.data[0].options);
+        setTimer(10);
       })
       .catch((err) => setErr(err))
       .finally(() => setIsLoading(false));
   }, [order, type]);
+
+  useEffect(() => {
+    const timerInterval = setInterval(() => {
+      setTimer((prevTimer) => {
+        if (prevTimer === 0) {
+          clearInterval(timerInterval);
+          handleNextQuestion();
+          return 0;
+        }
+        return prevTimer - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timerInterval);
+  }, [timer, order]);
 
   useEffect(() => {
     axios
@@ -51,14 +68,19 @@ function QuestionPage() {
         question.answers.push(answerInput);
         return axios.patch(`${URLquestions}/${questionId}`, question);
       })
-      .then((resp) => {
-        if (order != lastQuestionIndex) {
-          const nextQuestion = parseInt(order) + 1;
-          navigate(`/${type}/${nextQuestion}`);
-        } else {
-          navigate(`/${type}/loading`);
-        }
-      });
+      .then(() => {
+        handleNextQuestion();
+      })
+      .catch((err) => setErr(err));
+  };
+
+  const handleNextQuestion = () => {
+    if (parseInt(order) !== lastQuestionIndex) {
+      const nextQuestion = parseInt(order) + 1;
+      navigate(`/${type}/${nextQuestion}`);
+    } else {
+      navigate(`/${type}/loading`);
+    }
   };
 
   if (err)
@@ -115,6 +137,7 @@ function QuestionPage() {
         >
           Next
         </button>
+        <div className="timer">{timer}</div>
       </div>
     </div>
   );
