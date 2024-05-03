@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios, { all } from "axios";
+import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const URLanswers = "https://questions-server.adaptable.app/answers";
