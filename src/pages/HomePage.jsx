@@ -14,7 +14,7 @@ const HomePage = () => {
           </button>
         </Link>
       </div>
-      <Link to="/choose-avatar">
+      <Link to="/instructions">
         <button className="bg-customPink hover:bg-customPinkHover text-white font-bold px-6 rounded-full w-48 h-12 lexend-deca">
           Next
         </button>
