@@ -1,23 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+
+const URLanswers = "https://questions-server.adaptable.app/answers";
 
 function ResultsPage() {
   const [results, setResults] = useState(null);
   const { type } = useParams();
-  const URL = `https://questions-server.adaptable.app/users`;
+
   useEffect(() => {
-    axios.get(URL).then((resp) => {
+    axios.get(`${URLanswers}?survey=sarcastic&questionId=1`).then((resp) => {
+      //only the first question from the survey sarcastic
+      setResults(resp.data);
       console.log(resp.data);
-      setResults(resp.data[0].answers);
     });
-  }, []);
+  }, [type]);
+
   return (
     <div>
-      <h1>
-        Question {order}: {answer}
-      </h1>
+      {results && results.length > 0 && (
+        <>
+          <div>{results[0].questionText}</div>
+          {results.map((answer) => (
+            <div key={answer.id}>{answer.answerText}</div>
+          ))}
+        </>
+      )}
     </div>
   );
 }
