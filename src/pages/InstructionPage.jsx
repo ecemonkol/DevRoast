@@ -13,10 +13,8 @@ function InstructionPage() {
           make this interactive session a highlight of our cohort!
         </p>
       </div>
-      <Link to={`/choose-avatar`} className="mt-8">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-full lexend-deca">
-          START
-        </button>
+      <Link to={`/${type}/1`}>
+        <button>START</button>
       </Link>
     </div>
   );

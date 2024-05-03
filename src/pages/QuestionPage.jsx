@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import RadioOption from "../components/RadioOption";
 const URLquestions = "https://questions-server.adaptable.app/questions";
+const URLanswers = "https://questions-server.adaptable.app/answers";
 
 function QuestionPage() {
   const navigate = useNavigate();
@@ -57,21 +58,21 @@ function QuestionPage() {
   const handleOnChange = (e) => {
     setAnswerInput(e.target.value);
   };
+
   const handleSendAnswer = () => {
-    axios
-      .get(`${URLquestions}/${questionId}`)
-      .then((resp) => {
-        const question = resp.data;
-        if (!question.answers) {
-          question.answers = [];
-        }
-        question.answers.push(answerInput);
-        return axios.patch(`${URLquestions}/${questionId}`, question);
-      })
-      .then(() => {
-        handleNextQuestion();
-      })
-      .catch((err) => setErr(err));
+    const storedUser = localStorage.getItem("user");
+    const currentUser = JSON.parse(storedUser);
+
+    const newAnswer = {
+      answerId: Date.now(),
+      questionId: questionId,
+      questionText: questionText,
+      text: answerInput,
+      userId: currentUser.id,
+    };
+
+   axios.post(URLanswers, newAnswer).then((resp) => 
+     handleNextQuestion()).catch((err) => setErr(err));
   };
 
   const handleNextQuestion = () => {
