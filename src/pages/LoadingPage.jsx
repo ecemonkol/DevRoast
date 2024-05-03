@@ -28,6 +28,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const API_URL = "https://uselessfacts.jsph.pl/random.json?language=en";
 
@@ -53,6 +54,11 @@ function LoadingPage() {
         Random Useless Fact:
       </h3>
       <p className="text-2xl w-60p text-center">{fact}</p>
+      <Link to="/">
+        <button className="bg-customPink hover:bg-customPinkHover text-white font-bold px-6 py-2 rounded-full mt-4">
+          Home
+        </button>
+      </Link>
     </div>
   );
 }
