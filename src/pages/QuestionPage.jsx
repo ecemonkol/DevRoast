@@ -15,7 +15,6 @@ function QuestionPage() {
   const [answerInput, setAnswerInput] = useState("");
   const [err, setErr] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const totalQuestions = 4;
 
   useEffect(() => {
     axios
@@ -34,7 +33,6 @@ function QuestionPage() {
       .get(`${URLquestions}?type=${type}`)
       .then((resp) => {
         setLastQuestionIndex(resp.data.length);
-        console.log(resp.data.length);
       })
       .catch((err) => setErr(err));
   }, [type]);
@@ -80,7 +78,7 @@ function QuestionPage() {
       <div className="h-2 bg-gray-100 w-full">
         <div
           className="h-full bg-customBlue rounded-full"
-          style={{ width: `${(order / totalQuestions) * 100}%` }}
+          style={{ width: `${(order / (lastQuestionIndex + 1)) * 100}%` }}
         ></div>
       </div>
       <div className="flex flex-col items-center justify-center h-screen space-y-4 ">
