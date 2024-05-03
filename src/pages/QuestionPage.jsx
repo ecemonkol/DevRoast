@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import RadioOption from "../components/RadioOption";
 const URLquestions = "https://questions-server.adaptable.app/questions";
-const URLusers = "https://questions-server.adaptable.app/users";
+const URLanswers = "https://questions-server.adaptable.app/answers";
 
 function QuestionPage() {
   const navigate = useNavigate();
@@ -13,7 +13,6 @@ function QuestionPage() {
   const [questionId, setQuestionId] = useState(null);
   const [questionOptions, setQuestionOptions] = useState(null);
   const [lastQuestionIndex, setLastQuestionIndex] = useState(null);
-  const [answers, setAnswers] = useState([]);
   const [answerInput, setAnswerInput] = useState("");
   const [err, setErr] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -46,31 +45,23 @@ function QuestionPage() {
   const handleSendAnswer = () => {
     const storedUser = localStorage.getItem("user");
     const currentUser = JSON.parse(storedUser);
+
     const newAnswer = {
+      answerId: Date.now(),
       questionId: questionId,
       questionText: questionText,
       text: answerInput,
+      userId: currentUser.id,
     };
 
-    axios.get(`${URLusers}/${currentUser.id}`).then((resp) => {
-      const user = resp.data;
-      if (!user.answers) {
-        user.answers = [newAnswer];
+    axios.post(URLanswers, newAnswer).then((resp) => {
+      if (order == lastQuestionIndex) {
+        console.log("lastQuestion", order == lastQuestionIndex);
+        navigate(`/${type}/loading`);
       } else {
-        user.answers.push(newAnswer);
+        const nextQuestion = parseInt(order) + 1;
+        navigate(`/${type}/${nextQuestion}`);
       }
-
-      axios
-        .patch(`${URLusers}/${currentUser.id}`, { answers: user.answers })
-        .then((resp) => {
-          if (order == lastQuestionIndex) {
-            console.log("lastQuestion", order == lastQuestionIndex);
-            navigate(`/${type}/loading`);
-          } else {
-            const nextQuestion = parseInt(order) + 1;
-            navigate(`/${type}/${nextQuestion}`);
-          }
-        });
     });
   };
 

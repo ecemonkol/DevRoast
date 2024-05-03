@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 function ResultsPage() {
   const [results, setResults] = useState(null);
   const { type } = useParams();
-  const URL = `https://questions-server.adaptable.app/questions?type=${type}&order=${order}`;
+  const URL = `https://questions-server.adaptable.app/users`;
   useEffect(() => {
     axios.get(URL).then((resp) => {
       console.log(resp.data);
