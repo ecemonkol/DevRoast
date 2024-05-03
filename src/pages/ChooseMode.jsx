@@ -5,7 +5,7 @@ function ChooseMode() {
   const navigate = useNavigate();
   const handleClick = (e) => {
     const type = e.target.value;
-    navigate(`/${type}/1`);
+    navigate(`/instructions/${type}`);
   };
   return (
     <div className="flex flex-col items-center justify-center h-screen space-grotesk">

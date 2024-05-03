@@ -3,6 +3,9 @@ import avatar1 from "../assets/avatars/avatar1.png";
 import avatar2 from "../assets/avatars/avatar2.png";
 import avatar3 from "../assets/avatars/avatar3.png";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const URL = "https://questions-server.adaptable.app/users";
 
 function ChooseAvatar() {
   const navigate = useNavigate();
@@ -10,10 +13,15 @@ function ChooseAvatar() {
   const handleClick = (e) => {
     const newUser = {
       id: Date.now(),
+      date: new Date().toISOString().slice(0, 10),
       avatar: e.target.src,
+      //survey, date, answers, question id
     };
-    navigate("/choose-mode");
+    axios.post(URL, newUser).then((resp) => {
+      navigate("/choose-mode");
+    });
   };
+
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-4xl mb-4 space-grotesk">Tell us who you are:</h1>
