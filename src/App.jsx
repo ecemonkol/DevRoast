@@ -18,7 +18,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/choose-avatar" element={<AvatarPage />} />
         <Route path="/choose-mode" element={<ChooseMode />} />
-        <Route path="/instructions/:type" element={<InstructionPage />} />
+        <Route path="/instructions" element={<InstructionPage />} />
         <Route path="/:type/:order" element={<QuestionPage />} />
         <Route path="/:type/loading" element={<LoadingPage />} />
         <Route path="/:type/results" element={<ResultsPage />} />

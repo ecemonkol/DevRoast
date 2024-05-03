@@ -16,6 +16,7 @@ function QuestionPage() {
   const [answerInput, setAnswerInput] = useState("");
   const [err, setErr] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [timer, setTimer] = useState(10);
 
   useEffect(() => {
     axios
@@ -24,10 +25,26 @@ function QuestionPage() {
         setQuestionText(resp.data[0].text);
         setQuestionId(resp.data[0].id);
         setQuestionOptions(resp.data[0].options);
+        setTimer(10);
       })
       .catch((err) => setErr(err))
       .finally(() => setIsLoading(false));
   }, [order, type]);
+
+  useEffect(() => {
+    const timerInterval = setInterval(() => {
+      setTimer((prevTimer) => {
+        if (prevTimer === 0) {
+          clearInterval(timerInterval);
+          handleNextQuestion();
+          return 0;
+        }
+        return prevTimer - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timerInterval);
+  }, [timer, order]);
 
   useEffect(() => {
     axios
@@ -54,15 +71,17 @@ function QuestionPage() {
       userId: currentUser.id,
     };
 
-    axios.post(URLanswers, newAnswer).then((resp) => {
-      if (order == lastQuestionIndex) {
-        console.log("lastQuestion", order == lastQuestionIndex);
-        navigate(`/${type}/loading`);
-      } else {
-        const nextQuestion = parseInt(order) + 1;
-        navigate(`/${type}/${nextQuestion}`);
-      }
-    });
+   axios.post(URLanswers, newAnswer).then((resp) => 
+     handleNextQuestion()).catch((err) => setErr(err));
+  };
+
+  const handleNextQuestion = () => {
+    if (parseInt(order) !== lastQuestionIndex) {
+      const nextQuestion = parseInt(order) + 1;
+      navigate(`/${type}/${nextQuestion}`);
+    } else {
+      navigate(`/${type}/loading`);
+    }
   };
 
   if (err)
@@ -73,8 +92,13 @@ function QuestionPage() {
     );
   if (isLoading)
     return (
-      <div className="flex flex-col items-center justify-center h-screen space-y-4 ">
-        Loading...
+      <div className="wrapper">
+        <div className="loader">
+          <div className="loading one"></div>
+          <div className="loading two"></div>
+          <div className="loading three"></div>
+          <div className="loading four"></div>
+        </div>
       </div>
     );
   return (
@@ -114,6 +138,7 @@ function QuestionPage() {
         >
           Next
         </button>
+        <div className="timer">{timer}</div>
       </div>
     </div>
   );
