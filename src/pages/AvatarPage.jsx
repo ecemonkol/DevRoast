@@ -5,7 +5,6 @@ import avatar3 from "../assets/avatars/avatar3.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
 const URLusers = "https://questions-server.adaptable.app/users";
 
 function ChooseAvatar() {
@@ -14,6 +13,7 @@ function ChooseAvatar() {
   const handleClick = (e) => {
     const newUser = {
       id: Date.now(),
+      dateCreated: new Date().toISOString().slice(0, 10),
       avatar: e.target.src,
     };
     axios.post(URLusers, newUser).then((resp) => {
