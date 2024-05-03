@@ -60,3 +60,48 @@ body {
   font-weight: 600;
   font-style: normal;
 }
+
+/* mini loading animation */
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.wrapper .loader {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.loader .loading {
+  background: #ff78ab;
+  width: 20px;
+  height: 20px;
+  border-radius: 50px;
+  margin: 0 10px;
+  animation: load 0.7s ease infinite;
+}
+
+.loader .loading.one {
+  animation-delay: 0.3s;
+}
+.loader .loading.two {
+  animation-delay: 0.4s;
+}
+.loader .loading.three {
+  animation-delay: 0.5s;
+}
+
+@keyframes load {
+  0% {
+    width: 20px;
+    height: 20px;
+  }
+  50% {
+    width: 15px;
+    height: 15px;
+  } /* Adjusted size */
+}
