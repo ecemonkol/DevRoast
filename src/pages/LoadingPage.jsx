@@ -48,9 +48,11 @@ function LoadingPage() {
   }, []);
 
   return (
-    <div>
-      <h3>Random Useless Fact:</h3>
-      <p>{fact}</p>
+    <div className=" flex flex-col items-center justify-center h-screen space-grotesk">
+      <h3 className="text-3xl text-customGreen max-w-lg text-center">
+        Random Useless Fact:
+      </h3>
+      <p className="text-2xl w-60p text-center">{fact}</p>
     </div>
   );
 }
