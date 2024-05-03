@@ -35,10 +35,11 @@ function ResultsPage() {
         .then((responses) => {
           const newResults = {};
           responses.forEach((resp, index) => {
-            newResults[questions[index].text] = resp.data;
+            const allAnswers = [];
+            resp.data.forEach((answer) => allAnswers.push(answer.answerText));
+            newResults[questions[index].text] = allAnswers;
           });
           setResults(newResults);
-          console.log(Object.keys(newResults));
           console.log(newResults);
         })
         .catch((err) => setErr(err))
@@ -72,7 +73,7 @@ function ResultsPage() {
             <h3>{question}</h3>
             <ul>
               {results[question].map((answer, answerIndex) => (
-                <li key={answerIndex}>{answer.answerText}</li>
+                <li key={answerIndex}>{answer}</li>
               ))}
             </ul>
           </div>
