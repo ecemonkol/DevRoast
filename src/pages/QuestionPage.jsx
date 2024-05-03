@@ -69,8 +69,13 @@ function QuestionPage() {
     );
   if (isLoading)
     return (
-      <div className="flex flex-col items-center justify-center h-screen space-y-4 ">
-        Loading...
+      <div className="wrapper">
+        <div className="loader">
+          <div className="loading one"></div>
+          <div className="loading two"></div>
+          <div className="loading three"></div>
+          <div className="loading four"></div>
+        </div>
       </div>
     );
   return (
