@@ -85,12 +85,13 @@ function QuestionPage() {
               className="optionsQuestion"
               onChange={handleOnChange}
             >
-              <RadioOption 
+              <RadioOption
                 value={option}
                 questionText={questionText}
                 handleOnChange={handleOnChange}
               />
-            ))}
+            </div>
+          ))}
         </div>
       )}
       <button
