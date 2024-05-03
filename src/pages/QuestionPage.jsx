@@ -64,15 +64,18 @@ function QuestionPage() {
     const currentUser = JSON.parse(storedUser);
 
     const newAnswer = {
-      answerId: Date.now(),
+      id: Date.now(),
       questionId: questionId,
       questionText: questionText,
-      text: answerInput,
+      answerText: answerInput,
       userId: currentUser.id,
+      survey: type,
     };
 
-   axios.post(URLanswers, newAnswer).then((resp) => 
-     handleNextQuestion()).catch((err) => setErr(err));
+    axios
+      .post(URLanswers, newAnswer)
+      .then((resp) => handleNextQuestion())
+      .catch((err) => setErr(err));
   };
 
   const handleNextQuestion = () => {
