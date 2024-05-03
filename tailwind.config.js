@@ -9,7 +9,7 @@ export default {
         customGreen: "#1FCF6A",
         customGreenHover: "#19AB5B",
         customBlue: "#0169FF",
-        ustomGBlueHover: "#123456",
+        customBlueHover: "#123456",
       },
     },
     fontSize: {
