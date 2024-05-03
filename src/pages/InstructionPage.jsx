@@ -13,7 +13,7 @@ function InstructionPage() {
           make this interactive session a highlight of our cohort!
         </p>
       </div>
-      <Link to={`/${choose-mode}`}>
+      <Link to="/choose-mode">
         <button>START</button>
       </Link>
     </div>
