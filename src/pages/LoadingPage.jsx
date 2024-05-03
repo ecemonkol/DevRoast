@@ -40,8 +40,7 @@ function LoadingPage() {
     const fetchData = async () => {
       try {
         const response = await axios.get(API_URL);
-        console.log(response.data);
-        setFact(response.data.text); // Extract fact from the response object
+        setFact(response.data.text);
       } catch (error) {
         console.log(error);
       }

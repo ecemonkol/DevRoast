@@ -68,7 +68,7 @@ function QuestionPage() {
       questionId: questionId,
       questionText: questionText,
       answerText: answerInput,
-      userId: currentUser.id,
+      userId: +currentUser.id,
       survey: type,
     };
 
