@@ -5,7 +5,7 @@ import avatar3 from "../assets/avatars/avatar3.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const URL = "https://questions-server.adaptable.app/users";
+const URLusers = "https://questions-server.adaptable.app/users";
 
 function ChooseAvatar() {
   const navigate = useNavigate();
@@ -13,13 +13,13 @@ function ChooseAvatar() {
   const handleClick = (e) => {
     const newUser = {
       id: Date.now(),
-      date: new Date().toISOString().slice(0, 10),
       avatar: e.target.src,
-      //survey, date, answers, question id
     };
-    axios.post(URL, newUser).then((resp) => {
+    axios.post(URLusers, newUser).then((resp) => {
       navigate("/choose-mode");
+      console.log("user created", resp);
     });
+    localStorage.setItem("user", JSON.stringify(newUser));
   };
 
   return (

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import RadioOption from "../components/RadioOption";
 const URLquestions = "https://questions-server.adaptable.app/questions";
+const URLusers = "https://questions-server.adaptable.app/users";
 
 function QuestionPage() {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ function QuestionPage() {
   const [questionId, setQuestionId] = useState(null);
   const [questionOptions, setQuestionOptions] = useState(null);
   const [lastQuestionIndex, setLastQuestionIndex] = useState(null);
+  const [answers, setAnswers] = useState([]);
   const [answerInput, setAnswerInput] = useState("");
   const [err, setErr] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -40,25 +42,36 @@ function QuestionPage() {
   const handleOnChange = (e) => {
     setAnswerInput(e.target.value);
   };
+
   const handleSendAnswer = () => {
-    axios
-      .get(`${URLquestions}/${questionId}`)
-      .then((resp) => {
-        const question = resp.data;
-        if (!question.answers) {
-          question.answers = [];
-        }
-        question.answers.push(answerInput);
-        return axios.patch(`${URLquestions}/${questionId}`, question);
-      })
-      .then((resp) => {
-        if (order != lastQuestionIndex) {
-          const nextQuestion = parseInt(order) + 1;
-          navigate(`/${type}/${nextQuestion}`);
-        } else {
-          navigate(`/${type}/loading`);
-        }
-      });
+    const storedUser = localStorage.getItem("user");
+    const currentUser = JSON.parse(storedUser);
+    const newAnswer = {
+      questionId: questionId,
+      questionText: questionText,
+      text: answerInput,
+    };
+
+    axios.get(`${URLusers}/${currentUser.id}`).then((resp) => {
+      const user = resp.data;
+      if (!user.answers) {
+        user.answers = [newAnswer];
+      } else {
+        user.answers.push(newAnswer);
+      }
+
+      axios
+        .patch(`${URLusers}/${currentUser.id}`, { answers: user.answers })
+        .then((resp) => {
+          if (order == lastQuestionIndex) {
+            console.log("lastQuestion", order == lastQuestionIndex);
+            navigate(`/${type}/loading`);
+          } else {
+            const nextQuestion = parseInt(order) + 1;
+            navigate(`/${type}/${nextQuestion}`);
+          }
+        });
+    });
   };
 
   if (err)
