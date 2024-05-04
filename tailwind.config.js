@@ -6,7 +6,7 @@ export default {
       colors: {
         customPink: "#FD78AF",
         customGreen: "#2AC080",
-        customBlue: "#216F7",
+        customBlue: "#216FE7",
         customBeige: "#FAFAEE",
       },
     },

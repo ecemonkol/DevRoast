@@ -30,6 +30,10 @@ body {
   border-radius: 20px;
 }
 
+.custom-shadow {
+  box-shadow: 10px 10px 0 0 rgba(0, 0, 0, 1); /* Adjust the shadow size and color here */
+}
+
 /* About button animation */
 .about-button {
   color: white;
@@ -56,6 +60,25 @@ body {
 
 .plus {
   opacity: 0;
+}
+/* FONT */
+
+.ibm-plex-mono-medium {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.ibm-plex-mono-semibold {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.ibm-plex-mono-bold {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 700;
+  font-style: normal;
 }
 
 .space-grotesk {
@@ -89,7 +112,7 @@ body {
 }
 
 .loader .loading {
-  background: #ff78ab;
+  background: #216fe7;
   width: 20px;
   height: 20px;
   border-radius: 50px;
