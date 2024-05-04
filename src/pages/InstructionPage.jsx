@@ -14,7 +14,9 @@ function InstructionPage() {
         </p>
       </div>
       <Link to="/choose-avatar">
-        <button>START</button>
+        <button className="button-56" role="button">
+          START
+        </button>
       </Link>
     </div>
   );

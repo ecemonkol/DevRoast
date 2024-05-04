@@ -106,9 +106,9 @@ function QuestionPage() {
     );
   return (
     <div>
-      <div className="h-2 bg-gray-100 w-full">
+      <div className="h-4 w-full">
         <div
-          className="h-full bg-customBlue rounded-full"
+          className="h-full bg-black rounded-full"
           style={{ width: `${(order / (lastQuestionIndex + 1)) * 100}%` }}
         ></div>
       </div>
@@ -137,7 +137,8 @@ function QuestionPage() {
         <button
           type="submit"
           onClick={handleSendAnswer}
-          className="bg-customPink hover:bg-customPinkHover text-white font-bold px-6 rounded-full w-48 h-12 lexend-deca"
+          className="button-56"
+          role="button"
         >
           Next
         </button>

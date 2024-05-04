@@ -4,12 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        customPink: "#FF97CA",
-        customPinkHover: "#FF78AB",
-        customGreen: "#1FCF6A",
-        customGreenHover: "#19AB5B",
-        customBlue: "#0169FF",
-        customBlueHover: "#123456",
+        customPink: "#FD78AF",
+        customGreen: "#2AC080",
+        customBlue: "#216F7",
+        customBeige: "#FAFAEE",
       },
     },
     fontSize: {
@@ -19,7 +17,7 @@ export default {
       "2xl": "1.563rem",
       "3xl": "1.953rem",
       "4xl": "2.441rem",
-      "5xl": "5.052rem",
+      "5xl": "6.052rem",
     },
   },
   plugins: [],

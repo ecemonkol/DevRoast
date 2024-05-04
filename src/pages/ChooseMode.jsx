@@ -8,26 +8,29 @@ function ChooseMode() {
     navigate(`/${type}/1`);
   };
   return (
-    <div className="flex flex-col items-center justify-center h-screen space-grotesk">
-      <h1 className="text-4xl mb-4">Choose the Mode</h1>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h1 className="text-4xl mb-4 space-grotesk">Choose the Mode</h1>
       <button
         onClick={handleClick}
         value="sarcastic"
-        className="bg-customPink hover:bg-customPinkHover text-white font-bold px-6 rounded-full w-48 h-12 lexend-deca"
+        className="button-56"
+        role="button"
       >
         Sarcastic mode
       </button>
       <button
         onClick={handleClick}
         value="omar"
-        className="bg-customPink hover:bg-customPinkHover text-white font-bold px-6 rounded-full w-48 h-12 lexend-deca"
+        className="button-56"
+        role="button"
       >
         Omar mode
       </button>
       <button
         onClick={handleClick}
         value="cute"
-        className="bg-customPink hover:bg-customPinkHover text-white font-bold px-6 rounded-full w-48 h-12 lexend-deca"
+        className="button-56"
+        role="button"
       >
         Cute mode
       </button>
