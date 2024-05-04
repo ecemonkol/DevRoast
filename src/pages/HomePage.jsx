@@ -9,13 +9,13 @@ const HomePage = () => {
       </h1>
       <div className="absolute bottom-0 left-0 mb-6 ml-6 ">
         <Link to="/about">
-          <button className="about-button lexend-deca">
-            <span className="plus">About</span>
+          <button className="about-button  bg-customBeige text-black border-black border-2 ">
+            <span className="plus  text-black space-grotesk">About</span>
           </button>
         </Link>
       </div>
       <Link to="/instructions">
-        <button className="bg-customPink hover:bg-customPinkHover text-white font-bold px-6 rounded-full w-48 h-12 lexend-deca">
+        <button className="button-56" role="button">
           Next
         </button>
       </Link>

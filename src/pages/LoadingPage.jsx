@@ -55,7 +55,7 @@ function LoadingPage() {
       </h3>
       <p className="text-2xl w-60p text-center">{fact}</p>
       <Link to={`/${type}/results`}>
-        <button className="bg-customPink hover:bg-customPinkHover text-white font-bold px-6 py-2 rounded-full mt-4">
+        <button className="button-56" role="button">
           Home
         </button>
       </Link>

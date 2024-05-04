@@ -15,12 +15,13 @@ function AboutPage() {
         href="https://github.com/ecemonkol/questions-app"
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-customPink hover:bg-customPinkHover text-white font-bold px-6 rounded-full w-48 h-12 flex justify-center items-center mt-4"
+        className="button-56"
+        role="button"
       >
         GitHub Repo
       </a>
       <Link to="/">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded-full mt-4">
+        <button className="button-56" role="button">
           Back
         </button>
       </Link>
