@@ -106,34 +106,38 @@ function QuestionPage() {
     );
   return (
     <div>
-      <div className="h-4 w-full">
+      <div className="h-4  mt-2 mx-2">
         <div
           className="h-full bg-black rounded-full"
           style={{ width: `${(order / (lastQuestionIndex + 1)) * 100}%` }}
         ></div>
       </div>
-      <div className="flex flex-col items-center justify-center h-screen space-y-4 ">
-        <div className="space-grotesk text-4xl px-4">{questionText}</div>
-        {!questionOptions && (
-          <input
-            type="text"
-            value={answerInput}
-            onChange={handleOnChange}
-            className="p-2 border border-gray-300 rounded-full w-64 h-16"
-          />
-        )}
-        {questionOptions && (
-          <div className="flex flex-col items-start space-y-2">
-            {questionOptions.map((option) => (
-              <RadioOption
-                key={option}
-                value={option}
-                questionText={questionText}
-                handleOnChange={handleOnChange}
-              />
-            ))}
+      <div className="flex flex-col items-center justify-center h-screen">
+        <div className="space-y-4 border-2 border-black p-10 rounded-lg custom-shadow">
+          <div className="space-grotesk max-w-lg text-center mb-8">
+            {questionText}
           </div>
-        )}
+          {!questionOptions && (
+            <input
+              type="text"
+              value={answerInput}
+              onChange={handleOnChange}
+              className="p-2 border border-gray-300 rounded-full w-64 h-16"
+            />
+          )}
+          {questionOptions && (
+            <div className="flex flex-col items-start space-y-2">
+              {questionOptions.map((option) => (
+                <RadioOption
+                  key={option}
+                  value={option}
+                  questionText={questionText}
+                  handleOnChange={handleOnChange}
+                />
+              ))}
+            </div>
+          )}
+        </div>
         <button
           type="submit"
           onClick={handleSendAnswer}

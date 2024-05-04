@@ -4,8 +4,8 @@ import { Link, useParams } from "react-router-dom";
 function InstructionPage() {
   const { type } = useParams();
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="max-w-lg text-center">
+    <div className=" flex flex-col items-center justify-center h-screen">
+      <div className=" max-w-lg text-center border-2 border-black p-10 rounded-lg custom-shadow mb-8">
         <p className="space-grotesk">
           Get ready to click, laugh, and share! Our group project brings you a
           real-time survey experience built with React JS and a live API. As you
@@ -14,7 +14,7 @@ function InstructionPage() {
         </p>
       </div>
       <Link to="/choose-avatar">
-        <button className="button-56" role="button">
+        <button className="button-56  " role="button">
           START
         </button>
       </Link>
