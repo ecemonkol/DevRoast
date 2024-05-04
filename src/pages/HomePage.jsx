@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-5xl mb-8 text-customGreen ibm-plex-mono-bold">
+      <h1 className="outline-text text-9xl mb-8 text-customGreen ibm-plex-mono-bold">
         Hello! <br />
         Here we go!
       </h1>

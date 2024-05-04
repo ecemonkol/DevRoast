@@ -114,7 +114,7 @@ function QuestionPage() {
       </div>
       <div className="flex flex-col items-center justify-center h-screen">
         <div className="space-y-4 border-2 border-black p-10 rounded-lg custom-shadow">
-          <div className="space-grotesk max-w-lg text-center mb-8">
+          <div className="space-grotesk text-2xl max-w-lg text-center mb-8">
             {questionText}
           </div>
           {!questionOptions && (
@@ -122,7 +122,8 @@ function QuestionPage() {
               type="text"
               value={answerInput}
               onChange={handleOnChange}
-              className="p-2 border border-gray-300 rounded-full w-64 h-16"
+              className="p-2 border-2 border-black rounded-md w-40 h-12 text-center  mx-auto"
+              style={{ display: "block" }}
             />
           )}
           {questionOptions && (
@@ -147,6 +148,12 @@ function QuestionPage() {
           Next
         </button>
         <div className="timer">{timer}</div>
+      </div>
+      <div className="h-4  mb-2 mx-2">
+        <div
+          className="h-full bg-black rounded-full"
+          style={{ width: `${(order / (lastQuestionIndex + 1)) * 100}%` }}
+        ></div>
       </div>
     </div>
   );

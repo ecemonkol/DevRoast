@@ -25,7 +25,7 @@ function ChooseAvatar() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-4xl mb-4 space-grotesk">Tell us who you are:</h1>
+      <h1 className="text-5xl mb-4 space-grotesk">Tell us who you are</h1>
       <div className="flex justify-center">
         <img
           src={avatar1}

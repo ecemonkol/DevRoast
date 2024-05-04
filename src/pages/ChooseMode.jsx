@@ -9,7 +9,7 @@ function ChooseMode() {
   };
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-4xl mb-4 space-grotesk">Choose the Mode</h1>
+      <h1 className="text-5xl mb-4 space-grotesk">Choose the Mode</h1>
       <div className="flex flex-row">
         <button
           onClick={handleClick}
