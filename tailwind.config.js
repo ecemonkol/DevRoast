@@ -21,7 +21,7 @@ export default {
         "5xl": "6.052rem",
       },
       animation: {
-        jiggle: "jiggle 0.5s ease-in-out",
+        jiggle: "jiggle 0.5s ease-in-out infinite",
       },
       keyframes: {
         jiggle: {
@@ -29,6 +29,11 @@ export default {
           "50%": { transform: "rotate(3deg)" },
         },
       },
+    },
+  },
+  variants: {
+    extend: {
+      animation: ["hover", "focus"],
     },
   },
   plugins: [],
