@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import CardDeck from "../components/CardDeck/CardDeck";
 
 const URLanswers = "https://questions-server.adaptable.app/answers";
 
@@ -68,6 +69,7 @@ function ResultsPage() {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen px-4 space-grotesk">
+      <CardDeck />
       <div className="questions-container max-w-screen-md">
         {results &&
           Object.keys(results).map((question, index) => (
