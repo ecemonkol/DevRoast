@@ -60,6 +60,9 @@ function QuestionPage() {
   };
 
   const handleSendAnswer = () => {
+    if (!answerInput.trim()) {
+      return;
+    }
     const storedUser = localStorage.getItem("user");
     const currentUser = JSON.parse(storedUser);
 

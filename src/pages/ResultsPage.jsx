@@ -7,13 +7,23 @@ import CardDeck from "../components/CardDeck/CardDeck";
 const URLanswers = "https://questions-server.adaptable.app/answers";
 
 function ResultsPage() {
-  const [totalAnswers, setTotalAnswers] = useState(null);
-  //https://questions-server.adaptable.app/answers?surveyId=1&questionId=1 - gets number of answers on a question
+  const [totalUsers, setTotalUsers] = useState(null);
   const [results, setResults] = useState(null);
   const [questions, setQuestions] = useState();
   const { surveyId } = useParams();
   const [err, setErr] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const getTotalUsers = () => {
+      const URLusers = `https://questions-server.adaptable.app/users?_embed=answers&surveyId=${surveyId}`;
+      axios.get(URLusers).then((resp) => {
+        const activeUsers = resp.data.filter((user) => user.answers);
+        setTotalUsers(activeUsers.length);
+      });
+    };
+    getTotalUsers();
+  }, [surveyId]);
 
   const getOptionAnswers = (arr) => {
     const optionResults = {};
@@ -105,24 +115,28 @@ function ResultsPage() {
   return (
     <div className="flex flex-col justify-center items-center h-screen px-4 space-grotesk">
       <CardDeck />
+      <div>TOTAL USERS: {totalUsers}</div>
       <div className="questions-container max-w-screen-md">
         {results && (
           <div>
             {Object.entries(results.optionResults).map(
-              ([question, answers]) => (
-                <div key={question} className="question text-center mb-8">
-                  <h3>{question}</h3>
-                  <ul className="text-customGreen">
-                    {Object.entries(answers).map(
-                      ([answerText, count], index) => (
-                        <li key={index}>
-                          {answerText} - {count}
-                        </li>
-                      )
-                    )}
-                  </ul>
-                </div>
-              )
+              ([question, answers]) => {
+                return (
+                  <div key={question} className="question text-center mb-8">
+                    <h3>{question}</h3>
+                    <ul className="text-customGreen">
+                      {Object.entries(answers).map(
+                        ([answerText, count], index) => (
+                          <li key={index}>
+                            {answerText} - {count} (
+                            {Math.round((count / totalUsers) * 100)}%)
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                );
+              }
             )}
             {Object.entries(results.freeInputResults).map(
               ([question, answers]) => (
