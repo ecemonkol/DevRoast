@@ -19,7 +19,7 @@ export default {
         "5xl": "6.052rem",
       },
       animation: {
-        jiggle: "jiggle 0.5s ease-in-out infinite",
+        "jiggle-once": "jiggle 0.5s ease-in-out",
       },
       keyframes: {
         jiggle: {
