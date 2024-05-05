@@ -7,35 +7,32 @@ import CardDeck from "../components/CardDeck/CardDeck";
 const URLanswers = "https://questions-server.adaptable.app/answers";
 
 function ResultsPage() {
-  const [users, setUsers] = useState(null);
+  const [totalAnswers, setTotalAnswers] = useState(null);
+  //https://questions-server.adaptable.app/answers?surveyId=1&questionId=1 - gets number of answers on a question
   const [results, setResults] = useState(null);
-  const [questions, setQuestions] = useState({
-    optionQuestions: [],
-    freeInputQuestions: [],
-  });
+  const [questions, setQuestions] = useState();
   const { surveyId } = useParams();
   const [err, setErr] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const sortQuestions = (questions) => {
-    const optionQuestions = questions.filter((question) => question.options);
-    const freeInputQuestions = questions.filter(
-      (question) => !question.options
-    );
-    setQuestions({ optionQuestions, freeInputQuestions });
+  const getOptionAnswers = (arr) => {
+    const optionResults = {};
+    arr.forEach((answer) => {
+      if (answer.options) {
+        const answerText = answer.answerText;
+        optionResults[answerText] = (optionResults[answerText] || 0) + 1;
+      }
+    });
+    return optionResults;
   };
 
-  const filterAnswers = (arr) =>
-    arr
-      .filter((answer) => answer.answerText)
-      .map((answer) => answer.answerText);
-
-  useEffect(() => {
-    const URL = `https://questions-server.adaptable.app/users?_embed=answers&surveyId=${1}`;
-    const getUsers = () =>
-      // do this only if users have answers // include ansers lenght?
-      axios.get(URL).then((resp) => setUsers(resp.data.length));
-  }, []);
+  const getFreeInputAnswers = (arr) => {
+    return arr.map((answer) => {
+      if (!answer.options) {
+        return answer.answerText;
+      }
+    });
+  };
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -44,8 +41,7 @@ function ResultsPage() {
           `https://questions-server.adaptable.app/surveys/${surveyId}?_embed=questions`
         );
         const allQuestions = resp.data.questions;
-        console.log(resp.data.questions);
-        sortQuestions(allQuestions);
+        setQuestions(allQuestions);
       } catch (error) {
         setErr(error);
       }
@@ -54,39 +50,28 @@ function ResultsPage() {
   }, [surveyId]);
 
   useEffect(() => {
-    const getResults = async () => {
-      if (questions.optionQuestions && questions.freeInputQuestions) {
-        const promisesFreeInput = questions.freeInputQuestions.map((question) =>
+    if (questions) {
+      const getResults = async () => {
+        const promises = questions.map((question) =>
           axios.get(
             `${URLanswers}?surveyId=${surveyId}&questionId=${question.id}`
           )
         );
-        const promisesOption = questions.optionQuestions.map((question) =>
-          axios.get(
-            `${URLanswers}?surveyId=${surveyId}&questionId=${question.id}`
-          )
-        );
-
-        const freeInputResults = {};
-        const optionResults = {};
-
         try {
-          const freeInputResponses = await Promise.all(promisesFreeInput);
-          freeInputResponses.forEach((resp, index) => {
-            const answersArr = filterAnswers(resp.data);
-            freeInputResults[questions.freeInputQuestions[index].text] =
-              answersArr;
-          });
+          let freeInputResults = {};
+          let optionResults = {};
 
-          const optionResponses = await Promise.all(promisesOption);
-          optionResponses.forEach((resp, index) => {
-            const answersArr = filterAnswers(resp.data);
-            const anwersWithCount = {};
-            answersArr.forEach((answer) => {
-              anwersWithCount[answer] = (anwersWithCount[answer] || 0) + 1;
-            });
-            optionResults[questions.optionQuestions[index].text] =
-              anwersWithCount;
+          const responses = await Promise.all(promises);
+          responses.forEach((resp) => {
+            if (!resp.data[0].options) {
+              const questionText = resp.data[0].questionText;
+              const answersArr = getFreeInputAnswers(resp.data);
+              freeInputResults[questionText] = answersArr;
+            } else {
+              const questionText = resp.data[0].questionText;
+              const optionAnswer = getOptionAnswers(resp.data);
+              optionResults[questionText] = optionAnswer;
+            }
           });
           console.log({ optionResults, freeInputResults });
           setResults({ optionResults, freeInputResults });
@@ -94,9 +79,9 @@ function ResultsPage() {
         } catch (error) {
           setErr(error);
         }
-      }
-    };
-    getResults();
+      };
+      getResults();
+    }
   }, [questions, surveyId]);
 
   if (err)
