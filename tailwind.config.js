@@ -14,6 +14,7 @@ export default {
       animation: {
         "jiggle-once": "jiggle 0.5s ease-in-out",
         floating: "floating 3s ease-in-out infinite",
+        stress: "stress 0.5s infinite",
       },
       keyframes: {
         jiggle: {
@@ -25,9 +26,19 @@ export default {
           "50%": { transform: "translateY(-10px)" },
           "100%": { transform: "translateY(0)" },
         },
+        stress: {
+          "0%, 100%": { transform: "translate(0, 0)" },
+          "50%": { transform: "translate(-5px, -5px)" }, // Adjusted for diagonal movement
+        },
       },
       height: {
         "86vh": "86vh",
+      },
+      spacing: {
+        1.5: "0.375rem",
+      },
+      maxWidth: {
+        custom: "80vw",
       },
     },
   },
