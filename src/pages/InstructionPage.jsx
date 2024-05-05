@@ -4,20 +4,20 @@ import { Link, useParams } from "react-router-dom";
 function InstructionPage() {
   const { type } = useParams();
   return (
-    <div className=" flex flex-col items-center justify-center h-screen">
-      <div className=" max-w-lg text-center border-2 border-black p-10 rounded-lg custom-shadow mb-8">
-        <p className="space-grotesk">
-          Get ready to click, laugh, and share! Our group project brings you a
-          real-time survey experience built with React JS and a live API. As you
-          answer, we'll capture and project data for instant enjoyment. Let’s
-          make this interactive session a highlight of our cohort!
+    <div>
+      <div className="flex flex-col items-center ">
+        <h1 className="space-grotesk text-5xl mt-48">Instructions</h1>
+        <p className="list-none space-grotesk text-xl mt-12">
+          <li>1. Select a mode and blablaa</li>
+          <li>2. Don't be lethargic and answer the questions on time</li>
+          <li>3. Enjoy the results</li>
         </p>
+        <Link to="/choose-avatar">
+          <button className="button-56  mt-20" role="button">
+            START
+          </button>
+        </Link>
       </div>
-      <Link to="/choose-avatar">
-        <button className="button-56  " role="button">
-          START
-        </button>
-      </Link>
     </div>
   );
 }
