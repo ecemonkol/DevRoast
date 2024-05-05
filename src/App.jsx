@@ -9,7 +9,7 @@ import LoadingPage from "./pages/LoadingPage";
 import ResultsPage from "./pages/ResultsPage";
 import QuestionPage from "./pages/QuestionPage";
 import ChooseMode from "./pages/ChooseMode";
-import ErrorPage from "./pages/ErrorPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -20,10 +20,13 @@ function App() {
         <Route path="/choose-avatar" element={<AvatarPage />} />
         <Route path="/choose-mode" element={<ChooseMode />} />
         <Route path="/instructions" element={<InstructionPage />} />
+        <Route path="/:type/:order" element={<QuestionPage />} />
+        <Route path="/:type/loading" element={<LoadingPage />} />
+        <Route path="/:type/results" element={<ResultsPage />} />
         <Route path="/:surveyId/:order" element={<QuestionPage />} />
         <Route path="/:surveyId/loading" element={<LoadingPage />} />
         <Route path="/:surveyId/results" element={<ResultsPage />} />
-        <Route path="/error" element={<ErrorPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );
