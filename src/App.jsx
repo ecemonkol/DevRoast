@@ -23,6 +23,9 @@ function App() {
         <Route path="/:type/:order" element={<QuestionPage />} />
         <Route path="/:type/loading" element={<LoadingPage />} />
         <Route path="/:type/results" element={<ResultsPage />} />
+        <Route path="/:surveyId/:order" element={<QuestionPage />} />
+        <Route path="/:surveyId/loading" element={<LoadingPage />} />
+        <Route path="/:surveyId/results" element={<ResultsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>

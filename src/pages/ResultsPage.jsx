@@ -7,79 +7,90 @@ import CardDeck from "../components/CardDeck/CardDeck";
 const URLanswers = "https://questions-server.adaptable.app/answers";
 
 function ResultsPage() {
+  const [totalUsers, setTotalUsers] = useState(null);
   const [results, setResults] = useState(null);
-  const [questions, setQuestions] = useState({
-    optionQuestions: [],
-    freeInputQuestions: [],
-  });
-  const { type } = useParams();
+  const [questions, setQuestions] = useState();
+  const { surveyId } = useParams();
   const [err, setErr] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const filterQuestions = (questions) => {
-    const optionQuestions = questions.filter((question) => question.options);
-    const freeInputQuestions = questions.filter(
-      (question) => !question.options
-    );
-    setQuestions({ optionQuestions, freeInputQuestions });
-  };
+  useEffect(() => {
+    const getTotalUsers = () => {
+      const URLusers = `https://questions-server.adaptable.app/users?_embed=answers&surveyId=${surveyId}`;
+      axios
+        .get(URLusers)
+        .then((resp) => {
+          const activeUsers = resp.data.filter(
+            (user) => user.answers.length > 0
+          );
+          console.log(activeUsers);
+          setTotalUsers(activeUsers.length);
+        })
+        .catch(() => {
+          setErr(err);
+          console.error("problem fetching total users", err);
+        });
+    };
+    getTotalUsers();
+  }, [surveyId]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchQuestions = async () => {
       try {
         const resp = await axios.get(
-          `https://questions-server.adaptable.app/surveys?type=${type}&_embed=questions`
+          `https://questions-server.adaptable.app/surveys/${surveyId}?_embed=questions`
         );
-        const allQuestions = resp.data[0].questions;
-        filterQuestions(allQuestions);
+        const allQuestions = resp.data.questions;
+        setQuestions(allQuestions);
       } catch (error) {
         setErr(error);
       }
     };
-    fetchData();
-  }, [type]);
+    fetchQuestions();
+  }, [surveyId]);
+
+  const getFreeInputAnswers = (arr) => {
+    return arr.map((answer) => {
+      if (!answer.options) {
+        return answer.answerText;
+      }
+    });
+  };
+
+  const getOptionAnswers = (arr) => {
+    const optionResults = {};
+    arr.forEach((answer) => {
+      if (answer.options) {
+        const answerText = answer.answerText;
+        optionResults[answerText] = (optionResults[answerText] || 0) + 1;
+      }
+    });
+    return optionResults;
+  };
 
   useEffect(() => {
-    const getResults = async () => {
-      if (
-        questions.optionQuestions.length > 0 ||
-        questions.freeInputQuestions.length > 0
-      ) {
-        const promisesFreeInput = questions.freeInputQuestions.map((question) =>
-          axios.get(`${URLanswers}?survey=${type}&questionId=${question.id}`)
+    if (questions) {
+      const getResults = async () => {
+        const promises = questions.map((question) =>
+          axios.get(
+            `${URLanswers}?surveyId=${surveyId}&questionId=${question.id}`
+          )
         );
-        const promisesOption = questions.optionQuestions.map((question) =>
-          axios.get(`${URLanswers}?survey=${type}&questionId=${question.id}`)
-        );
-
-        const freeInputResults = {};
-        const optionResults = {};
-
         try {
-          const freeInputResponses = await Promise.all(promisesFreeInput);
-          freeInputResponses.forEach((resp, index) => {
-            const freeInputAnswers = resp.data.filter(
-              (answer) => answer.answerText
-            );
-            freeInputResults[questions.freeInputQuestions[index].text] =
-              freeInputAnswers.map((answer) => answer.answerText);
-          });
+          let freeInputResults = {};
+          let optionResults = {};
 
-          const optionResponses = await Promise.all(promisesOption);
-          optionResponses.forEach((resp, index) => {
-            const optionAnswers = resp.data.filter(
-              (answer) => answer.answerText
-            );
-            const countMap = {};
-            optionAnswers.forEach((answer) => {
-              countMap[answer.answerText] =
-                (countMap[answer.answerText] || 0) + 1;
-            });
-            optionResults[questions.optionQuestions[index].text] =
-              Object.entries(countMap).map(([text, count]) => ({
-                text,
-                count,
-              }));
+          const responses = await Promise.all(promises);
+          responses.forEach((resp) => {
+            if (!resp.data[0].options) {
+              const questionText = resp.data[0].questionText;
+              const answersArr = getFreeInputAnswers(resp.data);
+              freeInputResults[questionText] = answersArr;
+            } else {
+              const questionText = resp.data[0].questionText;
+              const optionAnswer = getOptionAnswers(resp.data);
+              optionResults[questionText] = optionAnswer;
+            }
           });
           console.log({ optionResults, freeInputResults });
           setResults({ optionResults, freeInputResults });
@@ -87,10 +98,10 @@ function ResultsPage() {
         } catch (error) {
           setErr(error);
         }
-      }
-    };
-    getResults();
-  }, [questions, type]);
+      };
+      getResults();
+    }
+  }, [questions, surveyId]);
 
   if (err)
     return (
@@ -112,38 +123,46 @@ function ResultsPage() {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen px-4 space-grotesk">
-     <CardDeck />
-    <div className="questions-container max-w-screen-md">
-      {results && (
-        <div>
-          {Object.entries(results.optionResults).map(([question, answers]) => (
-            <div key={question} className="question text-center mb-8">
-              <h3>{question}</h3>
-              <ul className="text-customGreen">
-                {answers.map((answer, index) => (
-                  <li key={index}>
-                    {answer.text} - {answer.count}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-          {Object.entries(results.freeInputResults).map(
-            ([question, answers]) => (
-              <div key={question}>
-                <h2>{question}</h2>
-                <ul>
-                  {answers.map((answer, index) => (
-                    <li key={index}>{answer}</li>
-                  ))}
-                </ul>
-              </div>
-            )
-          )}
-        </div>
-      )}
+      <CardDeck />
+      <div>TOTAL USERS: {totalUsers}</div>
+      <div className="questions-container max-w-screen-md">
+        {results && (
+          <div>
+            {Object.entries(results.optionResults).map(
+              ([question, answers]) => {
+                return (
+                  <div key={question} className="question text-center mb-8">
+                    <h3>{question}</h3>
+                    <ul className="text-customGreen">
+                      {Object.entries(answers).map(
+                        ([answerText, count], index) => (
+                          <li key={index}>
+                            {answerText || "no answer"} - {count} (
+                            {Math.round((count / totalUsers) * 100)}%)
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                );
+              }
+            )}
+            {Object.entries(results.freeInputResults).map(
+              ([question, answers]) => (
+                <div key={question} className="question text-center mb-8">
+                  <h2>{question}</h2>
+                  <ul className="text-customGreen">
+                    {answers.map((answer, index) => (
+                      <li key={index}>{answer}</li>
+                    ))}
+                  </ul>
+                </div>
+              )
+            )}
+          </div>
+        )}
+      </div>
     </div>
-  </div>
   );
 }
 
