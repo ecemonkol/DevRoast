@@ -34,7 +34,7 @@ const API_URL = "https://uselessfacts.jsph.pl/random.json?language=en";
 
 function LoadingPage() {
   const [fact, setFact] = useState("");
-  const { type } = useParams();
+  const { surveyId } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,7 +56,7 @@ function LoadingPage() {
         </h3>
         <p className="text-xl w-60p text-center mt-8">{fact}</p>
 
-        <Link to={`/${type}/results`}>
+        <Link to={`/${surveyId}/results`}>
           <button className="button-56 mt-12" role="button">
             Home
           </button>
