@@ -49,15 +49,15 @@ function LoadingPage() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center h-screen ">
-      <div className="max-w-lg flex flex-col items-center justify-center space-grotesk">
-        <h3 className="text-5xl text-center text-customGreen">
+    <div className="flex items-center justify-center mt-56 ">
+      <div className="max-w-lg flex flex-col items-center space-grotesk">
+        <h3 className="text-5xl text-center text-customGreen ">
           Random Useless Fact:
         </h3>
-        <p className="text-xl w-60p text-center">{fact}</p>
+        <p className="text-xl w-60p text-center mt-8">{fact}</p>
 
-        <Link to={`/${type}/results`} className="mt-4">
-          <button className="button-56" role="button">
+        <Link to={`/${type}/results`}>
+          <button className="button-56 mt-12" role="button">
             Home
           </button>
         </Link>

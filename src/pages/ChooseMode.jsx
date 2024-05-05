@@ -8,9 +8,9 @@ function ChooseMode() {
     navigate(`/${type}/1`);
   };
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center mt-56 h-screen">
       <h1 className="text-5xl mb-4 space-grotesk">Choose the Mode</h1>
-      <div className="flex flex-row">
+      <div className="flex flex-row mt-24">
         <button
           onClick={handleClick}
           value="sarcastic"

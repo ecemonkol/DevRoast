@@ -112,8 +112,8 @@ function QuestionPage() {
           style={{ width: `${(order / (lastQuestionIndex + 1)) * 100}%` }}
         ></div>
       </div>
-      <div className="flex flex-col items-center justify-center  h-86vh ">
-        <div className="space-y-4 border-2 bg-customPink border-black p-10 rounded-lg custom-shadow">
+      <div className="flex flex-col items-center  h-86vh ">
+        <div className="mt-48 border-2  border-black p-10 rounded-lg custom-shadow">
           <div className="space-grotesk text-2xl max-w-lg text-center mb-8">
             {questionText}
           </div>
@@ -142,7 +142,7 @@ function QuestionPage() {
         <button
           type="submit"
           onClick={handleSendAnswer}
-          className="button-56"
+          className="button-56 mt-12"
           role="button"
         >
           Next

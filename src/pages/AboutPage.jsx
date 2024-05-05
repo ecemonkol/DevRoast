@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 
 function AboutPage() {
   return (
-    <div className="flex flex-col h-screen justify-center items-center px-4">
-      <h1 className="space-grotesk text-5xl">We Are</h1>
-      <p className="text-center max-w-screen-md space-grotesk">
+    <div className="flex flex-col h-screen items-center px-4">
+      <h1 className="space-grotesk text-5xl mt-48">We Are</h1>
+      <p className="text-center max-w-screen-md space-grotesk mt-8">
         Welcome to Questions App - where surveys get a makeover! We're here to
         revolutionize the survey game by injecting a dose of fun and quirkiness
         into every question. Say goodbye to snooze-worthy surveys and hello to
         hilarious insights! Join us as we turn the mundane into the memorable,
         one witty question at a time. Let's make surveys fun again!
       </p>
-      <div className="flex flex-row">
+      <div className="mt-8 items-center justify-center text-center">
         <a
           href="https://github.com/ecemonkol/questions-app"
           target="_blank"

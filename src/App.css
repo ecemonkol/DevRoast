@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .text-giant {
+    font-size: 15rem; /* Adjust this size as needed */
+    line-height: 155px;
+  }
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -10,6 +17,10 @@
 .main {
   margin: 100px auto;
   width: 400px;
+}
+
+.shadow-outline {
+  box-shadow: 0 0 0 6px #000; /* Adjust the thickness here */
 }
 
 body {
