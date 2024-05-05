@@ -12,7 +12,7 @@ export default {
         customBeige: "#FAFAEE",
       },
       animation: {
-        jiggle: "jiggle 0.5s ease-in-out infinite",
+        "jiggle-once": "jiggle 0.5s ease-in-out",
         floating: "floating 3s ease-in-out infinite",
       },
       keyframes: {
