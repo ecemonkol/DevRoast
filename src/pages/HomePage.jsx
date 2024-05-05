@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="outline-text text-9xl mb-8 text-customGreen ibm-plex-mono-bold">
-        Hello! <br />
-        Here we go!
+    <div className="flex flex-col items-center justify-center h-86vh">
+      <h1 className="shadow-effect outline-text text-9xl mb-8 text-customGreen passion-one-black">
+        DEV <br />
+        ROAST!
       </h1>
       <div className="absolute bottom-0 left-0 mb-6 ml-6 ">
         <Link to="/about">

@@ -20,15 +20,16 @@ body {
       rgba(128, 110, 96, 0.1) 1px,
       transparent 1px
     ),
-    linear-gradient(rgba(128, 110, 96, 0.1) 1px, transparent 1px); /* Grid pattern */
-  background-size: 20px 20px; /* Size of each grid cell */
+    linear-gradient(rgba(128, 110, 96, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
   position: fixed;
   top: 30px;
   left: 30px;
   right: 30px;
   bottom: 30px;
-  border: 2px solid black;
+  border: 3px solid black;
   border-radius: 20px;
+  overflow: hidden;
 }
 
 .custom-shadow {
@@ -68,22 +69,21 @@ body {
   opacity: 0;
 }
 /* FONT */
-
-.ibm-plex-mono-medium {
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 500;
+.passion-one-regular {
+  font-family: "Passion One", sans-serif;
+  font-weight: 400;
   font-style: normal;
 }
 
-.ibm-plex-mono-semibold {
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 600;
-  font-style: normal;
-}
-
-.ibm-plex-mono-bold {
-  font-family: "IBM Plex Mono", monospace;
+.passion-one-bold {
+  font-family: "Passion One", sans-serif;
   font-weight: 700;
+  font-style: normal;
+}
+
+.passion-one-black {
+  font-family: "Passion One", sans-serif;
+  font-weight: 900;
   font-style: normal;
 }
 
@@ -209,4 +209,49 @@ body {
   .button-56 {
     padding: 0 40px;
   }
+}
+
+/* //RADIO button */
+
+.radio-label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.radio-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radio-custom {
+  position: relative;
+  display: inline-block;
+  width: 20px; /* Adjust the size of the radio button */
+  height: 20px; /* Adjust the size of the radio button */
+  margin-right: 8px; /* Add space between the radio button and the text */
+  border-radius: 50%; /* Makes the radio button round */
+  border: 2px solid #000; /* Sets the border color */
+}
+
+.radio-input:checked + .radio-custom::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px; /* Adjust the size of the inner circle */
+  height: 10px; /* Adjust the size of the inner circle */
+  border-radius: 50%; /* Makes the inner circle round */
+  background-color: #000; /* Sets the inner circle color when checked */
+}
+
+/* text shadow */
+
+.shadow-effect {
+  text-shadow: 8px 8px black;
 }

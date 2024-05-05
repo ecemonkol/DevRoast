@@ -20,6 +20,9 @@ export default {
           "50%": { transform: "rotate(3deg)" },
         },
       },
+      height: {
+        "86vh": "86vh",
+      },
     },
   },
   plugins: [],

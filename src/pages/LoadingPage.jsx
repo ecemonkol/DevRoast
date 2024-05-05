@@ -49,7 +49,7 @@ function LoadingPage() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-screen ">
       <div className="max-w-lg flex flex-col items-center justify-center space-grotesk">
         <h3 className="text-5xl text-center text-customGreen">
           Random Useless Fact:

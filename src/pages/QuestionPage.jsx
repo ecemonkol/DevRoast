@@ -37,7 +37,7 @@ function QuestionPage() {
         if (prevTimer === 0) {
           clearInterval(timerInterval);
           handleNextQuestion();
-          return 0;
+          return 10;
         }
         return prevTimer - 1;
       });
@@ -112,8 +112,8 @@ function QuestionPage() {
           style={{ width: `${(order / (lastQuestionIndex + 1)) * 100}%` }}
         ></div>
       </div>
-      <div className="flex flex-col items-center justify-center h-screen">
-        <div className="space-y-4 border-2 border-black p-10 rounded-lg custom-shadow">
+      <div className="flex flex-col items-center justify-center  h-86vh ">
+        <div className="space-y-4 border-2 bg-customPink border-black p-10 rounded-lg custom-shadow">
           <div className="space-grotesk text-2xl max-w-lg text-center mb-8">
             {questionText}
           </div>
@@ -147,12 +147,14 @@ function QuestionPage() {
         >
           Next
         </button>
-        <div className="timer">{timer}</div>
       </div>
-      <div className="h-4  mb-2 mx-2">
+      <div className="h-4 mb-2 mx-2 relative">
         <div
-          className="h-full bg-black rounded-full"
-          style={{ width: `${(order / (lastQuestionIndex + 1)) * 100}%` }}
+          className="absolute left-0 top-0 bottom-0 bg-customPink border-2 border-black rounded-full"
+          style={{
+            width: `${(10 - timer) * 10}%`,
+            transition: (10 - timer) * 10 === 0 ? "none" : "width 1s linear",
+          }}
         ></div>
       </div>
     </div>
