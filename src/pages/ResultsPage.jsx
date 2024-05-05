@@ -16,7 +16,7 @@ function ResultsPage() {
   const [err, setErr] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const filterQuestions = (questions) => {
+  const sortQuestions = (questions) => {
     const optionQuestions = questions.filter((question) => question.options);
     const freeInputQuestions = questions.filter(
       (question) => !question.options
@@ -24,27 +24,29 @@ function ResultsPage() {
     setQuestions({ optionQuestions, freeInputQuestions });
   };
 
+  const filterAnswers = (arr) =>
+    arr
+      .filter((answer) => answer.answerText)
+      .map((answer) => answer.answerText);
+
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchQuestions = async () => {
       try {
         const resp = await axios.get(
           `https://questions-server.adaptable.app/surveys?type=${type}&_embed=questions`
         );
         const allQuestions = resp.data[0].questions;
-        filterQuestions(allQuestions);
+        sortQuestions(allQuestions);
       } catch (error) {
         setErr(error);
       }
     };
-    fetchData();
+    fetchQuestions();
   }, [type]);
 
   useEffect(() => {
     const getResults = async () => {
-      if (
-        questions.optionQuestions.length > 0 ||
-        questions.freeInputQuestions.length > 0
-      ) {
+      if (questions.optionQuestions && questions.freeInputQuestions) {
         const promisesFreeInput = questions.freeInputQuestions.map((question) =>
           axios.get(`${URLanswers}?survey=${type}&questionId=${question.id}`)
         );
@@ -58,28 +60,20 @@ function ResultsPage() {
         try {
           const freeInputResponses = await Promise.all(promisesFreeInput);
           freeInputResponses.forEach((resp, index) => {
-            const freeInputAnswers = resp.data.filter(
-              (answer) => answer.answerText
-            );
+            const answersArr = filterAnswers(resp.data);
             freeInputResults[questions.freeInputQuestions[index].text] =
-              freeInputAnswers.map((answer) => answer.answerText);
+              answersArr;
           });
 
           const optionResponses = await Promise.all(promisesOption);
           optionResponses.forEach((resp, index) => {
-            const optionAnswers = resp.data.filter(
-              (answer) => answer.answerText
-            );
-            const countMap = {};
-            optionAnswers.forEach((answer) => {
-              countMap[answer.answerText] =
-                (countMap[answer.answerText] || 0) + 1;
+            const answersArr = filterAnswers(resp.data);
+            const anwersWithCount = {};
+            answersArr.forEach((answer) => {
+              anwersWithCount[answer] = (anwersWithCount[answer] || 0) + 1;
             });
             optionResults[questions.optionQuestions[index].text] =
-              Object.entries(countMap).map(([text, count]) => ({
-                text,
-                count,
-              }));
+              anwersWithCount;
           });
           console.log({ optionResults, freeInputResults });
           setResults({ optionResults, freeInputResults });
@@ -112,38 +106,42 @@ function ResultsPage() {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen px-4 space-grotesk">
-     <CardDeck />
-    <div className="questions-container max-w-screen-md">
-      {results && (
-        <div>
-          {Object.entries(results.optionResults).map(([question, answers]) => (
-            <div key={question} className="question text-center mb-8">
-              <h3>{question}</h3>
-              <ul className="text-customGreen">
-                {answers.map((answer, index) => (
-                  <li key={index}>
-                    {answer.text} - {answer.count}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-          {Object.entries(results.freeInputResults).map(
-            ([question, answers]) => (
-              <div key={question}>
-                <h2>{question}</h2>
-                <ul>
-                  {answers.map((answer, index) => (
-                    <li key={index}>{answer}</li>
-                  ))}
-                </ul>
-              </div>
-            )
-          )}
-        </div>
-      )}
+      <CardDeck />
+      <div className="questions-container max-w-screen-md">
+        {results && (
+          <div>
+            {Object.entries(results.optionResults).map(
+              ([question, answers]) => (
+                <div key={question} className="question text-center mb-8">
+                  <h3>{question}</h3>
+                  <ul className="text-customGreen">
+                    {Object.entries(answers).map(
+                      ([answerText, count], index) => (
+                        <li key={index}>
+                          {answerText} - {count}
+                        </li>
+                      )
+                    )}
+                  </ul>
+                </div>
+              )
+            )}
+            {Object.entries(results.freeInputResults).map(
+              ([question, answers]) => (
+                <div key={question} className="question text-center mb-8">
+                  <h2>{question}</h2>
+                  <ul className="text-customGreen">
+                    {answers.map((answer, index) => (
+                      <li key={index}>{answer}</li>
+                    ))}
+                  </ul>
+                </div>
+              )
+            )}
+          </div>
+        )}
+      </div>
     </div>
-  </div>
   );
 }
 
