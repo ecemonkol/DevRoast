@@ -8,29 +8,33 @@ import shine1 from "../assets/illustrations/shine1.png";
 
 function QuestionPage() {
   const navigate = useNavigate();
-  const { type } = useParams();
+  const { surveyId } = useParams();
   const { order } = useParams();
   const [questionText, setQuestionText] = useState(null);
   const [questionId, setQuestionId] = useState(null);
   const [questionOptions, setQuestionOptions] = useState(null);
   const [lastQuestionIndex, setLastQuestionIndex] = useState(null);
   const [answerInput, setAnswerInput] = useState("");
+  const [attemptedEmptyAnswer, setAttemptedEmptyAnswer] = useState(false);
+  const [answerTooLong, setAnswerTooLong] = useState(false);
   const [err, setErr] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [timer, setTimer] = useState(10);
 
   useEffect(() => {
     axios
-      .get(`${URLquestions}?type=${type}&order=${order}`)
+      .get(`${URLquestions}?surveyId=${surveyId}&order=${order}`)
       .then((resp) => {
         setQuestionText(resp.data[0].text);
         setQuestionId(resp.data[0].id);
         setQuestionOptions(resp.data[0].options);
+        setAttemptedEmptyAnswer(false);
+        setAnswerTooLong(false);
         setTimer(10);
       })
       .catch((err) => setErr(err))
       .finally(() => setIsLoading(false));
-  }, [order, type]);
+  }, [order, surveyId]);
 
   useEffect(() => {
     const timerInterval = setInterval(() => {
@@ -49,42 +53,70 @@ function QuestionPage() {
 
   useEffect(() => {
     axios
-      .get(`${URLquestions}?type=${type}`)
+      .get(`${URLquestions}?surveyId=${surveyId}`)
       .then((resp) => {
         setLastQuestionIndex(resp.data.length);
       })
       .catch((err) => setErr(err));
-  }, [type]);
+  }, [surveyId]);
 
   const handleOnChange = (e) => {
-    setAnswerInput(e.target.value);
+    const inputValue = e.target.value;
+    setAnswerInput(inputValue);
+    setAttemptedEmptyAnswer(!inputValue.trim());
+    setAnswerTooLong(inputValue.length > 30);
   };
 
   const handleSendAnswer = () => {
     const storedUser = localStorage.getItem("user");
     const currentUser = JSON.parse(storedUser);
 
-    const newAnswer = {
-      id: Date.now(),
-      questionId: questionId,
-      questionText: questionText,
-      answerText: answerInput,
-      userId: +currentUser.id,
-      survey: type,
-    };
-
     axios
-      .post(URLanswers, newAnswer)
-      .then((resp) => handleNextQuestion())
-      .catch((err) => setErr(err));
+      .get(`${URLanswers}?questionId=${questionId}&userId=${currentUser.id}`)
+      .then((resp) => {
+        if (resp.data.length > 0) {
+          const existingAnswer = resp.data[0];
+          const updatedAnswer = {
+            ...existingAnswer,
+            answerText: answerInput,
+          };
+          axios
+            .patch(`${URLanswers}/${existingAnswer.id}`, updatedAnswer)
+            .then((resp) => handleNextQuestion())
+            .catch((err) => {
+              console.error("error updating answer");
+              setErr(err);
+            });
+        } else {
+          const newAnswer = {
+            id: Date.now(),
+            questionId: questionId,
+            questionText: questionText,
+            answerText: answerInput,
+            userId: +currentUser.id,
+            surveyId: +surveyId,
+            options: Boolean(questionOptions),
+          };
+          axios
+            .post(URLanswers, newAnswer)
+            .then((resp) => handleNextQuestion())
+            .catch((err) => setErr(err));
+        }
+      })
+      .catch((err) => {
+        console.error("error sending answer");
+        setErr(err);
+      })
+      .finally((resp) => setAnswerInput(""));
   };
 
   const handleNextQuestion = () => {
     if (parseInt(order) !== lastQuestionIndex) {
       const nextQuestion = parseInt(order) + 1;
-      navigate(`/${type}/${nextQuestion}`);
+      navigate(`/${surveyId}/${nextQuestion}`);
+      setAnswerInput("");
     } else {
-      navigate(`/${type}/loading`);
+      navigate(`/${surveyId}/loading`);
     }
   };
 
@@ -105,6 +137,7 @@ function QuestionPage() {
         </div>
       </div>
     );
+
   return (
     <div>
       <div className="h-4 mt-2 mx-2">
@@ -140,6 +173,12 @@ function QuestionPage() {
               className="p-2 border-2 border-black rounded-md w-40 h-12 text-center mx-auto"
               style={{ display: "block" }}
             />
+          )}
+          {attemptedEmptyAnswer && (
+            <p className="text-red-500">Opps, I can't see your answer 😞</p>
+          )}
+          {answerTooLong && (
+            <p className="text-red-500">Hehe, try a shorter answer 😉</p>
           )}
           {questionOptions && (
             <div className="flex flex-col items-start space-y-2">
