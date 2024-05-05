@@ -14,6 +14,7 @@ function QuestionPage() {
   const [questionOptions, setQuestionOptions] = useState(null);
   const [lastQuestionIndex, setLastQuestionIndex] = useState(null);
   const [answerInput, setAnswerInput] = useState("");
+  const [attemptedEmptyAnswer, setAttemptedEmptyAnswer] = useState(false);
   const [err, setErr] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [timer, setTimer] = useState(10);
@@ -25,6 +26,7 @@ function QuestionPage() {
         setQuestionText(resp.data[0].text);
         setQuestionId(resp.data[0].id);
         setQuestionOptions(resp.data[0].options);
+        setAttemptedEmptyAnswer(false);
         setTimer(10);
       })
       .catch((err) => setErr(err))
@@ -57,29 +59,58 @@ function QuestionPage() {
 
   const handleOnChange = (e) => {
     setAnswerInput(e.target.value);
+    if (e.target.value.trim()) {
+      setAttemptedEmptyAnswer(false);
+    } else {
+      setAttemptedEmptyAnswer(true);
+    }
   };
 
   const handleSendAnswer = () => {
-    if (!answerInput.trim()) {
-      return;
-    }
     const storedUser = localStorage.getItem("user");
     const currentUser = JSON.parse(storedUser);
 
-    const newAnswer = {
-      id: Date.now(),
-      questionId: questionId,
-      questionText: questionText,
-      answerText: answerInput,
-      userId: +currentUser.id,
-      surveyId: +surveyId,
-      options: Boolean(questionOptions),
-    };
-    surveyId;
-    axios
-      .post(URLanswers, newAnswer)
-      .then((resp) => handleNextQuestion())
-      .catch((err) => setErr(err));
+    if (answerInput.trim()) {
+      axios
+        .get(`${URLanswers}?questionId=${questionId}&userId=${currentUser.id}`)
+        .then((resp) => {
+          if (resp.data.length > 0) {
+            const existingAnswer = resp.data[0];
+            const updatedAnswer = {
+              ...existingAnswer,
+              answerText: answerInput,
+            };
+            axios
+              .patch(`${URLanswers}/${existingAnswer.id}`, updatedAnswer)
+              .then((resp) => handleNextQuestion())
+              .catch((err) => {
+                console.error("error updating answer");
+                setErr(err);
+              });
+          } else {
+            const newAnswer = {
+              id: Date.now(),
+              questionId: questionId,
+              questionText: questionText,
+              answerText: answerInput,
+              userId: +currentUser.id,
+              surveyId: +surveyId,
+              options: Boolean(questionOptions),
+            };
+            axios
+              .post(URLanswers, newAnswer)
+              .then((resp) => handleNextQuestion())
+              .catch((err) => setErr(err));
+          }
+        })
+        .catch((err) => {
+          console.error("error sending answer");
+          setErr(err);
+        });
+    } else {
+      setAttemptedEmptyAnswer(true);
+      return;
+    }
   };
 
   const handleNextQuestion = () => {
@@ -108,6 +139,7 @@ function QuestionPage() {
         </div>
       </div>
     );
+
   return (
     <div>
       <div className="h-4  mt-2 mx-2">
@@ -129,6 +161,9 @@ function QuestionPage() {
               className="p-2 border-2 border-black rounded-md w-40 h-12 text-center  mx-auto"
               style={{ display: "block" }}
             />
+          )}
+          {attemptedEmptyAnswer && (
+            <p className="text-red-500">Opps, I can't see your answer 😞</p>
           )}
           {questionOptions && (
             <div className="flex flex-col items-start space-y-2">

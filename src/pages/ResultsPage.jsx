@@ -17,12 +17,36 @@ function ResultsPage() {
   useEffect(() => {
     const getTotalUsers = () => {
       const URLusers = `https://questions-server.adaptable.app/users?_embed=answers&surveyId=${surveyId}`;
-      axios.get(URLusers).then((resp) => {
-        const activeUsers = resp.data.filter((user) => user.answers);
-        setTotalUsers(activeUsers.length);
-      });
+      axios
+        .get(URLusers)
+        .then((resp) => {
+          const activeUsers = resp.data.filter(
+            (user) => user.answers.length > 0
+          );
+          console.log(activeUsers);
+          setTotalUsers(activeUsers.length);
+        })
+        .catch(() => {
+          setErr(err);
+          console.error("problem fetching total users", err);
+        });
     };
     getTotalUsers();
+  }, [surveyId]);
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const resp = await axios.get(
+          `https://questions-server.adaptable.app/surveys/${surveyId}?_embed=questions`
+        );
+        const allQuestions = resp.data.questions;
+        setQuestions(allQuestions);
+      } catch (error) {
+        setErr(error);
+      }
+    };
+    fetchQuestions();
   }, [surveyId]);
 
   const getOptionAnswers = (arr) => {
@@ -43,21 +67,6 @@ function ResultsPage() {
       }
     });
   };
-
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const resp = await axios.get(
-          `https://questions-server.adaptable.app/surveys/${surveyId}?_embed=questions`
-        );
-        const allQuestions = resp.data.questions;
-        setQuestions(allQuestions);
-      } catch (error) {
-        setErr(error);
-      }
-    };
-    fetchQuestions();
-  }, [surveyId]);
 
   useEffect(() => {
     if (questions) {
