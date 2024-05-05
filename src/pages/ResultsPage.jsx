@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CardDeck from "../components/CardDeck/CardDeck";
+import LoadingPage from "./LoadingPage";
 
 const URLanswers = "https://questions-server.adaptable.app/answers";
 
@@ -94,7 +95,9 @@ function ResultsPage() {
           });
           console.log({ optionResults, freeInputResults });
           setResults({ optionResults, freeInputResults });
-          setIsLoading(false);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 5000); // Display loading page for at least 5 seconds
         } catch (error) {
           setErr(error);
         }
@@ -109,17 +112,7 @@ function ResultsPage() {
         Opps, something went wrong.
       </div>
     );
-  if (isLoading)
-    return (
-      <div className="wrapper">
-        <div className="loader">
-          <div className="loading one"></div>
-          <div className="loading two"></div>
-          <div className="loading three"></div>
-          <div className="loading four"></div>
-        </div>
-      </div>
-    );
+  if (isLoading) return <LoadingPage />;
 
   return (
     <div className="flex flex-col justify-center items-center h-screen px-4 space-grotesk">

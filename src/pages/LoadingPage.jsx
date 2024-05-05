@@ -58,7 +58,7 @@ function LoadingPage() {
 
         <Link to={`/${surveyId}/results`}>
           <button className="button-56 mt-12" role="button">
-            Home
+            Skip
           </button>
         </Link>
       </div>
