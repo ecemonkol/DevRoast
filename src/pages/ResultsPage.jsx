@@ -12,7 +12,7 @@ function ResultsPage() {
     optionQuestions: [],
     freeInputQuestions: [],
   });
-  const { type } = useParams();
+  const { surveyId } = useParams();
   const [err, setErr] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -33,25 +33,30 @@ function ResultsPage() {
     const fetchQuestions = async () => {
       try {
         const resp = await axios.get(
-          `https://questions-server.adaptable.app/surveys?type=${type}&_embed=questions`
+          `https://questions-server.adaptable.app/surveys/${surveyId}?_embed=questions`
         );
-        const allQuestions = resp.data[0].questions;
+        const allQuestions = resp.data.questions;
+        console.log(resp.data.questions);
         sortQuestions(allQuestions);
       } catch (error) {
         setErr(error);
       }
     };
     fetchQuestions();
-  }, [type]);
+  }, [surveyId]);
 
   useEffect(() => {
     const getResults = async () => {
       if (questions.optionQuestions && questions.freeInputQuestions) {
         const promisesFreeInput = questions.freeInputQuestions.map((question) =>
-          axios.get(`${URLanswers}?survey=${type}&questionId=${question.id}`)
+          axios.get(
+            `${URLanswers}?surveyId=${surveyId}&questionId=${question.id}`
+          )
         );
         const promisesOption = questions.optionQuestions.map((question) =>
-          axios.get(`${URLanswers}?survey=${type}&questionId=${question.id}`)
+          axios.get(
+            `${URLanswers}?surveyId=${surveyId}&questionId=${question.id}`
+          )
         );
 
         const freeInputResults = {};
@@ -84,7 +89,7 @@ function ResultsPage() {
       }
     };
     getResults();
-  }, [questions, type]);
+  }, [questions, surveyId]);
 
   if (err)
     return (

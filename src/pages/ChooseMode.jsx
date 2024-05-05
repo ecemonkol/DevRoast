@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 function ChooseMode() {
   const navigate = useNavigate();
   const handleClick = (e) => {
-    const type = e.target.value;
-    navigate(`/${type}/1`);
+    const surveyId = e.target.value;
+    navigate(`/${surveyId}/1`);
   };
   return (
     <div className="flex flex-col items-center mt-56 h-screen">
@@ -13,7 +13,7 @@ function ChooseMode() {
       <div className="flex flex-row mt-24">
         <button
           onClick={handleClick}
-          value="sarcastic"
+          value={1}
           className="button-56 mr-4"
           role="button"
         >
@@ -21,7 +21,7 @@ function ChooseMode() {
         </button>
         <button
           onClick={handleClick}
-          value="omar"
+          value={2}
           className="button-56 mr-4"
           role="button"
         >
@@ -29,7 +29,7 @@ function ChooseMode() {
         </button>
         <button
           onClick={handleClick}
-          value="cute"
+          value={3}
           className="button-56"
           role="button"
         >

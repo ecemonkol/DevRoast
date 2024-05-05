@@ -7,7 +7,7 @@ const URLanswers = "https://questions-server.adaptable.app/answers";
 
 function QuestionPage() {
   const navigate = useNavigate();
-  const { type } = useParams();
+  const { surveyId } = useParams();
   const { order } = useParams();
   const [questionText, setQuestionText] = useState(null);
   const [questionId, setQuestionId] = useState(null);
@@ -20,7 +20,7 @@ function QuestionPage() {
 
   useEffect(() => {
     axios
-      .get(`${URLquestions}?type=${type}&order=${order}`)
+      .get(`${URLquestions}?surveyId=${surveyId}&order=${order}`)
       .then((resp) => {
         setQuestionText(resp.data[0].text);
         setQuestionId(resp.data[0].id);
@@ -29,7 +29,7 @@ function QuestionPage() {
       })
       .catch((err) => setErr(err))
       .finally(() => setIsLoading(false));
-  }, [order, type]);
+  }, [order, surveyId]);
 
   useEffect(() => {
     const timerInterval = setInterval(() => {
@@ -48,12 +48,12 @@ function QuestionPage() {
 
   useEffect(() => {
     axios
-      .get(`${URLquestions}?type=${type}`)
+      .get(`${URLquestions}?surveyId=${surveyId}`)
       .then((resp) => {
         setLastQuestionIndex(resp.data.length);
       })
       .catch((err) => setErr(err));
-  }, [type]);
+  }, [surveyId]);
 
   const handleOnChange = (e) => {
     setAnswerInput(e.target.value);
@@ -69,9 +69,9 @@ function QuestionPage() {
       questionText: questionText,
       answerText: answerInput,
       userId: +currentUser.id,
-      survey: type,
+      surveyId: +surveyId,
     };
-
+    surveyId;
     axios
       .post(URLanswers, newAnswer)
       .then((resp) => handleNextQuestion())
@@ -81,9 +81,9 @@ function QuestionPage() {
   const handleNextQuestion = () => {
     if (parseInt(order) !== lastQuestionIndex) {
       const nextQuestion = parseInt(order) + 1;
-      navigate(`/${type}/${nextQuestion}`);
+      navigate(`/${surveyId}/${nextQuestion}`);
     } else {
-      navigate(`/${type}/loading`);
+      navigate(`/${surveyId}/loading`);
     }
   };
 
