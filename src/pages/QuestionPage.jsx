@@ -41,7 +41,11 @@ function QuestionPage() {
       setTimer((prevTimer) => {
         if (prevTimer === 0) {
           clearInterval(timerInterval);
-          handleNextQuestion();
+          if (!answerInput.trim()) {
+            handleSendAnswer();
+          } else {
+            handleNextQuestion();
+          }
           return 10;
         }
         return prevTimer - 1;
@@ -104,7 +108,7 @@ function QuestionPage() {
         }
       })
       .catch((err) => {
-        console.error("error sending answer");
+        console.error("error saving answer");
         setErr(err);
       })
       .finally((resp) => setAnswerInput(""));
@@ -116,7 +120,7 @@ function QuestionPage() {
       navigate(`/${surveyId}/${nextQuestion}`);
       setAnswerInput("");
     } else {
-      navigate(`/${surveyId}/loading`);
+      navigate(`/${surveyId}/results`);
     }
   };
 
