@@ -124,45 +124,16 @@ function ResultsPage() {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen px-4 space-grotesk">
-      <CardGrid />
-      <div>TOTAL USERS: {totalUsers}</div>
-      <div className="questions-container max-w-screen-md">
-        {results && (
-          <div>
-            {Object.entries(results.optionResults).map(
-              ([question, answers]) => {
-                return (
-                  <div key={question} className="question text-center mb-8">
-                    <h3>{question}</h3>
-                    <ul className="text-customGreen">
-                      {Object.entries(answers).map(
-                        ([answerText, count], index) => (
-                          <li key={index}>
-                            {answerText || "no answer"} - {count} (
-                            {Math.round((count / totalUsers) * 100)}%)
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  </div>
-                );
-              }
-            )}
-            {Object.entries(results.freeInputResults).map(
-              ([question, answers]) => (
-                <div key={question} className="question text-center mb-8">
-                  <h2>{question}</h2>
-                  <ul className="text-customGreen">
-                    {answers.map((answer, index) => (
-                      <li key={index}>{answer}</li>
-                    ))}
-                  </ul>
-                </div>
-              )
-            )}
-          </div>
-        )}
-      </div>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : err ? (
+        <div>Oops, something went wrong.</div>
+      ) : (
+        <>
+          <CardGrid results={results} totalUsers={totalUsers} />
+          <div>TOTAL USERS: {totalUsers}</div>
+        </>
+      )}
     </div>
   );
 }

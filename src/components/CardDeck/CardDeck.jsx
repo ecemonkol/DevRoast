@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
-function CardDeck() {
+function CardDeck({ title, content }) {
   const [isJiggle, setIsJiggle] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleClick = () => {
     setIsJiggle(true);
-    setIsExpanded(!isExpanded); // Toggle expansion
+    setIsExpanded(!isExpanded);
 
     setTimeout(() => {
       setIsJiggle(false);
@@ -22,7 +22,10 @@ function CardDeck() {
       onClick={handleClick}
     >
       {isExpanded ? (
-        <p className="p-4">Expanded: Click again to collapse.</p>
+        <div className="p-4">
+          <h3>{title}</h3>
+          <p>{content}</p>
+        </div>
       ) : (
         <p>Click me!</p>
       )}
