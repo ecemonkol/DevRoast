@@ -29,6 +29,12 @@ export default {
       height: {
         "86vh": "86vh",
       },
+      spacing: {
+        1.5: "0.375rem",
+      },
+      maxWidth: {
+        custom: "80vw",
+      },
     },
   },
   variants: {

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CardDeck from "../components/CardDeck/CardDeck";
+import CardGrid from "../components/CardDeck/CardGrid";
 
 const URLanswers = "https://questions-server.adaptable.app/answers";
 
@@ -112,38 +113,40 @@ function ResultsPage() {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen px-4 space-grotesk">
-     <CardDeck />
-    <div className="questions-container max-w-screen-md">
-      {results && (
-        <div>
-          {Object.entries(results.optionResults).map(([question, answers]) => (
-            <div key={question} className="question text-center mb-8">
-              <h3>{question}</h3>
-              <ul className="text-customGreen">
-                {answers.map((answer, index) => (
-                  <li key={index}>
-                    {answer.text} - {answer.count}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-          {Object.entries(results.freeInputResults).map(
-            ([question, answers]) => (
-              <div key={question}>
-                <h2>{question}</h2>
-                <ul>
-                  {answers.map((answer, index) => (
-                    <li key={index}>{answer}</li>
-                  ))}
-                </ul>
-              </div>
-            )
-          )}
-        </div>
-      )}
+      <CardGrid className="wrapper-card-grid" />
+      <div className="questions-container max-w-screen-md">
+        {results && (
+          <div>
+            {Object.entries(results.optionResults).map(
+              ([question, answers]) => (
+                <div key={question} className="question text-center mb-8">
+                  <h3>{question}</h3>
+                  <ul className="text-customGreen">
+                    {answers.map((answer, index) => (
+                      <li key={index}>
+                        {answer.text} - {answer.count}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )
+            )}
+            {Object.entries(results.freeInputResults).map(
+              ([question, answers]) => (
+                <div key={question}>
+                  <h2>{question}</h2>
+                  <ul>
+                    {answers.map((answer, index) => (
+                      <li key={index}>{answer}</li>
+                    ))}
+                  </ul>
+                </div>
+              )
+            )}
+          </div>
+        )}
+      </div>
     </div>
-  </div>
   );
 }
 
