@@ -1,11 +1,31 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function ChooseMode() {
+  const URLusers = "https://questions-server.adaptable.app/users";
   const navigate = useNavigate();
+  const updateUser = (surveyId) => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      localStorage.setItem("user", JSON.stringify({ ...storedUser, surveyId }));
+      axios
+        .patch(`${URLusers}/${storedUser.id}`, { ...storedUser, surveyId })
+        .then(() => {
+          navigate(`/${surveyId}/1`);
+        })
+        .catch((error) => {
+          console.error("Error updating user data:", error);
+          navigate("/error");
+        });
+    } else {
+      navigate("/error");
+    }
+  };
+
   const handleClick = (e) => {
     const surveyId = e.target.value;
-    navigate(`/${surveyId}/1`);
+    updateUser(+surveyId);
   };
   return (
     <div className="flex flex-col items-center mt-56 h-screen">

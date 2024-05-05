@@ -7,6 +7,7 @@ import CardDeck from "../components/CardDeck/CardDeck";
 const URLanswers = "https://questions-server.adaptable.app/answers";
 
 function ResultsPage() {
+  const [users, setUsers] = useState(null);
   const [results, setResults] = useState(null);
   const [questions, setQuestions] = useState({
     optionQuestions: [],
@@ -28,6 +29,13 @@ function ResultsPage() {
     arr
       .filter((answer) => answer.answerText)
       .map((answer) => answer.answerText);
+
+  useEffect(() => {
+    const URL = `https://questions-server.adaptable.app/users?_embed=answers&surveyId=${1}`;
+    const getUsers = () =>
+      // do this only if users have answers // include ansers lenght?
+      axios.get(URL).then((resp) => setUsers(resp.data.length));
+  }, []);
 
   useEffect(() => {
     const fetchQuestions = async () => {

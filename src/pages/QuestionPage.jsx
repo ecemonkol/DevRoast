@@ -70,6 +70,7 @@ function QuestionPage() {
       answerText: answerInput,
       userId: +currentUser.id,
       surveyId: +surveyId,
+      options: Boolean(questionOptions),
     };
     surveyId;
     axios
