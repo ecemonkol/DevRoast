@@ -49,6 +49,14 @@ function ResultsPage() {
     fetchQuestions();
   }, [surveyId]);
 
+  const getFreeInputAnswers = (arr) => {
+    return arr.map((answer) => {
+      if (!answer.options) {
+        return answer.answerText;
+      }
+    });
+  };
+
   const getOptionAnswers = (arr) => {
     const optionResults = {};
     arr.forEach((answer) => {
@@ -58,14 +66,6 @@ function ResultsPage() {
       }
     });
     return optionResults;
-  };
-
-  const getFreeInputAnswers = (arr) => {
-    return arr.map((answer) => {
-      if (!answer.options) {
-        return answer.answerText;
-      }
-    });
   };
 
   useEffect(() => {
@@ -137,7 +137,7 @@ function ResultsPage() {
                       {Object.entries(answers).map(
                         ([answerText, count], index) => (
                           <li key={index}>
-                            {answerText} - {count} (
+                            {answerText || "no answer"} - {count} (
                             {Math.round((count / totalUsers) * 100)}%)
                           </li>
                         )

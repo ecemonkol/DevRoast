@@ -15,6 +15,7 @@ function QuestionPage() {
   const [lastQuestionIndex, setLastQuestionIndex] = useState(null);
   const [answerInput, setAnswerInput] = useState("");
   const [attemptedEmptyAnswer, setAttemptedEmptyAnswer] = useState(false);
+  const [answerTooLong, setAnswerTooLong] = useState(false);
   const [err, setErr] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [timer, setTimer] = useState(10);
@@ -27,6 +28,7 @@ function QuestionPage() {
         setQuestionId(resp.data[0].id);
         setQuestionOptions(resp.data[0].options);
         setAttemptedEmptyAnswer(false);
+        setAnswerTooLong(false);
         setTimer(10);
       })
       .catch((err) => setErr(err))
@@ -58,65 +60,60 @@ function QuestionPage() {
   }, [surveyId]);
 
   const handleOnChange = (e) => {
-    setAnswerInput(e.target.value);
-    if (e.target.value.trim()) {
-      setAttemptedEmptyAnswer(false);
-    } else {
-      setAttemptedEmptyAnswer(true);
-    }
+    const inputValue = e.target.value;
+    setAnswerInput(inputValue);
+    setAttemptedEmptyAnswer(!inputValue.trim());
+    setAnswerTooLong(inputValue.length > 30);
   };
 
   const handleSendAnswer = () => {
     const storedUser = localStorage.getItem("user");
     const currentUser = JSON.parse(storedUser);
 
-    if (answerInput.trim()) {
-      axios
-        .get(`${URLanswers}?questionId=${questionId}&userId=${currentUser.id}`)
-        .then((resp) => {
-          if (resp.data.length > 0) {
-            const existingAnswer = resp.data[0];
-            const updatedAnswer = {
-              ...existingAnswer,
-              answerText: answerInput,
-            };
-            axios
-              .patch(`${URLanswers}/${existingAnswer.id}`, updatedAnswer)
-              .then((resp) => handleNextQuestion())
-              .catch((err) => {
-                console.error("error updating answer");
-                setErr(err);
-              });
-          } else {
-            const newAnswer = {
-              id: Date.now(),
-              questionId: questionId,
-              questionText: questionText,
-              answerText: answerInput,
-              userId: +currentUser.id,
-              surveyId: +surveyId,
-              options: Boolean(questionOptions),
-            };
-            axios
-              .post(URLanswers, newAnswer)
-              .then((resp) => handleNextQuestion())
-              .catch((err) => setErr(err));
-          }
-        })
-        .catch((err) => {
-          console.error("error sending answer");
-          setErr(err);
-        });
-    } else {
-      setAttemptedEmptyAnswer(true);
-      return;
-    }
+    axios
+      .get(`${URLanswers}?questionId=${questionId}&userId=${currentUser.id}`)
+      .then((resp) => {
+        if (resp.data.length > 0) {
+          const existingAnswer = resp.data[0];
+          const updatedAnswer = {
+            ...existingAnswer,
+            answerText: answerInput,
+          };
+          axios
+            .patch(`${URLanswers}/${existingAnswer.id}`, updatedAnswer)
+            .then((resp) => handleNextQuestion())
+            .catch((err) => {
+              console.error("error updating answer");
+              setErr(err);
+            });
+        } else {
+          const newAnswer = {
+            id: Date.now(),
+            questionId: questionId,
+            questionText: questionText,
+            answerText: answerInput,
+            userId: +currentUser.id,
+            surveyId: +surveyId,
+            options: Boolean(questionOptions),
+          };
+          axios
+            .post(URLanswers, newAnswer)
+            .then((resp) => handleNextQuestion())
+            .catch((err) => setErr(err));
+        }
+      })
+      .catch((err) => {
+        console.error("error sending answer");
+        setErr(err);
+      })
+      .finally((resp) => setAnswerInput(""));
   };
 
   const handleNextQuestion = () => {
     if (parseInt(order) !== lastQuestionIndex) {
       const nextQuestion = parseInt(order) + 1;
       navigate(`/${surveyId}/${nextQuestion}`);
+      setAnswerInput("");
     } else {
       navigate(`/${surveyId}/loading`);
     }
@@ -164,6 +161,9 @@ function QuestionPage() {
           )}
           {attemptedEmptyAnswer && (
             <p className="text-red-500">Opps, I can't see your answer 😞</p>
+          )}
+          {answerTooLong && (
+            <p className="text-red-500">Hehe, try a shorter answer 😉</p>
           )}
           {questionOptions && (
             <div className="flex flex-col items-start space-y-2">
