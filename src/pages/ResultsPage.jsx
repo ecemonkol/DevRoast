@@ -6,7 +6,6 @@ import CardDeck from "../components/CardDeck/CardDeck";
 import LoadingPage from "./LoadingPage";
 import CardGrid from "../components/CardDeck/CardGrid";
 
-
 const URLanswers = "https://questions-server.adaptable.app/answers";
 
 function ResultsPage() {
@@ -118,7 +117,7 @@ function ResultsPage() {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen px-4 space-grotesk">
-      <CardDeck className="wrapper-card-grid"/>
+      <CardGrid className="wrapper-card-grid" />
       <div>TOTAL USERS: {totalUsers}</div>
       <div className="questions-container max-w-screen-md">
         {results && (
