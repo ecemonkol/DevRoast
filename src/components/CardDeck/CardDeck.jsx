@@ -5,13 +5,12 @@ function CardDeck() {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleClick = () => {
-    setIsJiggle(true); // Trigger jiggle
+    setIsJiggle(true);
     setIsExpanded(!isExpanded); // Toggle expansion
 
-    // Reset jiggle state after animation duration (500ms for example)
     setTimeout(() => {
       setIsJiggle(false);
-    }, 500); // Adjust this duration to match your animation duration
+    }, 500);
   };
 
   return (
