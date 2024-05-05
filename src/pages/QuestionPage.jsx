@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import RadioOption from "../components/RadioOption";
 const URLquestions = "https://questions-server.adaptable.app/questions";
 const URLanswers = "https://questions-server.adaptable.app/answers";
+import shine1 from "../assets/illustrations/shine1.png";
 
 function QuestionPage() {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ function QuestionPage() {
         if (prevTimer === 0) {
           clearInterval(timerInterval);
           handleNextQuestion();
-          return 0;
+          return 10;
         }
         return prevTimer - 1;
       });
@@ -106,43 +107,70 @@ function QuestionPage() {
     );
   return (
     <div>
-      <div className="h-4 w-full">
+      <div className="h-4 mt-2 mx-2">
         <div
           className="h-full bg-black rounded-full"
           style={{ width: `${(order / (lastQuestionIndex + 1)) * 100}%` }}
         ></div>
       </div>
-      <div className="flex flex-col items-center justify-center h-screen space-y-4 ">
-        <div className="space-grotesk text-4xl px-4">{questionText}</div>
-        {!questionOptions && (
-          <input
-            type="text"
-            value={answerInput}
-            onChange={handleOnChange}
-            className="p-2 border border-gray-300 rounded-full w-64 h-16"
+      <div className="flex flex-col items-center h-86vh ">
+        <div className="mt-48 border-2 border-black p-10 rounded-lg custom-shadow relative">
+          {/* Illustration */}
+          <img
+            src={shine1}
+            alt="Illustration"
+            className="absolute top-0 left-0 z-10 animate-floating"
+            style={{
+              width: "120px",
+              height: "auto",
+              top: "-30px",
+              left: "-80px",
+            }}
           />
-        )}
-        {questionOptions && (
-          <div className="flex flex-col items-start space-y-2">
-            {questionOptions.map((option) => (
-              <RadioOption
-                key={option}
-                value={option}
-                questionText={questionText}
-                handleOnChange={handleOnChange}
-              />
-            ))}
+
+          {/* Question Text */}
+          <div className="space-grotesk text-2xl max-w-lg text-center mb-8 relative z-20">
+            {questionText}
           </div>
-        )}
+          {!questionOptions && (
+            <input
+              type="text"
+              value={answerInput}
+              onChange={handleOnChange}
+              className="p-2 border-2 border-black rounded-md w-40 h-12 text-center mx-auto"
+              style={{ display: "block" }}
+            />
+          )}
+          {questionOptions && (
+            <div className="flex flex-col items-start space-y-2">
+              {questionOptions.map((option) => (
+                <RadioOption
+                  key={option}
+                  value={option}
+                  questionText={questionText}
+                  handleOnChange={handleOnChange}
+                />
+              ))}
+            </div>
+          )}
+        </div>
         <button
           type="submit"
           onClick={handleSendAnswer}
-          className="button-56"
+          className="button-56 mt-12"
           role="button"
         >
           Next
         </button>
-        <div className="timer">{timer}</div>
+      </div>
+      <div className="h-4 mb-2 mx-2 relative">
+        <div
+          className="absolute left-0 top-0 bottom-0 bg-customPink border-2 border-black rounded-full"
+          style={{
+            width: `${(10 - timer) * 10}%`,
+            transition: (10 - timer) * 10 === 0 ? "none" : "width 1s linear",
+          }}
+        ></div>
       </div>
     </div>
   );
