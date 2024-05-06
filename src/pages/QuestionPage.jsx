@@ -48,21 +48,6 @@ function QuestionPage() {
     }
   }, [timer]);
 
-  // useEffect(() => {
-  //   const timerInterval = setInterval(() => {
-  //     setTimer((prevTimer) => {
-  //       if (prevTimer === 0) {
-  //         clearInterval(timerInterval);
-  //         handleSendAnswer();
-  //         return 10;
-  //       }
-  //       return prevTimer - 1;
-  //     });
-  //   }, 1000);
-
-  //   return () => clearInterval(timerInterval);
-  // }, [timer, order]);
-
   useEffect(() => {
     axios
       .get(`${URLquestions}?surveyId=${surveyId}`)
@@ -76,7 +61,7 @@ function QuestionPage() {
     const inputValue = e.target.value;
     setAnswerInput(inputValue);
     setAttemptedEmptyAnswer(!inputValue.trim());
-    setAnswerTooLong(inputValue.length > 30);
+    setAnswerTooLong(inputValue.length > 20);
   };
 
   const handleSendAnswer = () => {
