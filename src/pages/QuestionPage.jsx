@@ -72,9 +72,9 @@ function QuestionPage() {
       console.error("User ID not found.");
       return;
     }
-    if (answerTooLong) return;
+    if (answerTooLong && !questionOptions) return;
 
-    if (answerTooLong) {
+    if (answerTooLong && !questionOptions) {
       const answerData = {
         questionId: parseInt(questionId),
         questionText: questionText,
@@ -183,7 +183,7 @@ function QuestionPage() {
           {attemptedEmptyAnswer && (
             <p className="text-red-500">Opps, I can't see your answer 😞</p>
           )}
-          {answerTooLong && (
+          {answerTooLong && !questionOptions && (
             <p className="text-red-500">Hehe, try a shorter answer 😉</p>
           )}
           {questionOptions && (

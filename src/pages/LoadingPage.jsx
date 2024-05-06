@@ -37,6 +37,12 @@ function LoadingPage() {
   const { surveyId } = useParams();
   const [timerIsUp, setTimerIsUp] = useState(false);
 
+  const getUserAvatar = () => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const avatar = storedUser.avatar;
+    return avatar;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -46,10 +52,11 @@ function LoadingPage() {
         console.log(error);
       }
     };
+
     fetchData();
     setTimeout(() => {
       setTimerIsUp(true);
-    }, 5000);
+    }, 8000);
   }, []);
 
   return (
@@ -60,15 +67,21 @@ function LoadingPage() {
         </h3>
         <p className="text-xl w-60p text-center mt-8">{fact}</p>
 
-        <Link to={`/${surveyId}/results`}>
-          <button
-            className="button-56 mt-12"
-            role="button"
-            disabled={!timerIsUp}
-          >
-            Results are ready!
-          </button>
-        </Link>
+        {!timerIsUp && getUserAvatar() && (
+          <img
+            src={getUserAvatar()}
+            alt="avatar"
+            width={120}
+            className="animate-buzz-infinite"
+          />
+        )}
+        {timerIsUp && (
+          <Link to={`/${surveyId}/results`}>
+            <button className="button-56 mt-12" role="button">
+              Results are ready!
+            </button>
+          </Link>
+        )}
       </div>
     </div>
   );
