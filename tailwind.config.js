@@ -67,7 +67,7 @@ export default {
         1.5: "0.375rem",
       },
       maxWidth: {
-        custom: "80vw",
+        custom: "90vw",
       },
     },
   },

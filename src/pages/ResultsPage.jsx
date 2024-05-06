@@ -8,7 +8,7 @@ import CardGrid from "../components/CardDeck/CardGrid";
 
 const URLanswers = "https://questions-server.adaptable.app/answers";
 
-function ResultsPage() {
+const ResultsPage = () => {
   const [totalUsers, setTotalUsers] = useState(null);
   const [results, setResults] = useState(null);
   const [questions, setQuestions] = useState();
@@ -109,26 +109,28 @@ function ResultsPage() {
 
   if (err)
     return (
-      <div className="flex flex-col items-center justify-center h-screen space-y-4 ">
+      <div className=" body-results-page flex flex-col items-center justify-center h-screen space-y-4 ">
         Opps, something went wrong.
       </div>
     );
   if (isLoading) return <LoadingPage />;
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen px-4 space-grotesk">
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : err ? (
-        <div>Oops, something went wrong.</div>
-      ) : (
-        <>
-          <CardGrid results={results} totalUsers={totalUsers} />
-          <div>TOTAL USERS: {totalUsers}</div>
-        </>
-      )}
+    <div className="results-page-wrapper">
+      <div className="flex flex-col justify-center items-center h-screen px-4 space-grotesk">
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : err ? (
+          <div>Oops, something went wrong.</div>
+        ) : (
+          <>
+            <CardGrid results={results} totalUsers={totalUsers} />
+            <div>TOTAL USERS: {totalUsers}</div>
+          </>
+        )}
+      </div>
     </div>
   );
-}
+};
 
 export default ResultsPage;

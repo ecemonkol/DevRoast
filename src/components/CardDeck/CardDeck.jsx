@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./CardDeck.css";
 
 function CardDeck({ title, content }) {
   const [isJiggle, setIsJiggle] = useState(false);
@@ -15,15 +16,19 @@ function CardDeck({ title, content }) {
 
   return (
     <div
-      className={`w-48 h-72 bg-customPink rounded-lg 
+      className={`card-results custom-shadow w-48 h-72 bg-customPink rounded-lg 
                   transition-all duration-300 ease-in-out 
                   ${isJiggle ? "animate-jiggle-once" : ""} 
                   ${isExpanded ? "scale-125" : "scale-100"}`}
       onClick={handleClick}
     >
       {isExpanded ? (
-        <div className="p-4">
-          <p>{content}</p>
+        <div className="results-text">
+          {content.map((item, index) => (
+            <ul>
+              <li key={`${item}${index}`}>{item}</li>
+            </ul>
+          ))}
         </div>
       ) : (
         <h4>{title}</h4>

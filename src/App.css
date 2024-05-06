@@ -34,14 +34,21 @@ body {
     ),
     linear-gradient(rgba(128, 110, 96, 0.1) 1px, transparent 1px);
   background-size: 20px 20px;
-  position: fixed;
+  /* position: fixed;
   top: 30px;
   left: 30px;
   right: 30px;
-  bottom: 30px;
-  border: 3px solid black;
+  bottom: 30px; */
+  /* border: 3px solid black; */
   border-radius: 20px;
   overflow: hidden;
+}
+
+.results-page-wrapper {
+  background-color: #fd78af;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
 }
 
 .custom-shadow {
@@ -100,10 +107,9 @@ body {
 }
 
 .space-grotesk {
-  /* Apply the Space Grotesk font and specify font weights */
   font-family: "Space Grotesk", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 700; /* You can adjust the font weight as needed */
+  font-weight: 700;
   font-style: normal;
 }
 
