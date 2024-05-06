@@ -7,6 +7,11 @@
     font-size: 15rem; /* Adjust this size as needed */
     line-height: 155px;
   }
+
+  .text-big {
+    font-size: 12rem; /* Adjust this size as needed */
+    line-height: 130px;
+  }
 }
 
 .form {
@@ -17,10 +22,6 @@
 .main {
   margin: 100px auto;
   width: 400px;
-}
-
-.shadow-outline {
-  box-shadow: 0 0 0 6px #000; /* Adjust the thickness here */
 }
 
 body {

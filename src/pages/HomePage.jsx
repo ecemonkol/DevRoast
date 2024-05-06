@@ -1,29 +1,90 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import cloud from "../assets/illustrations/cloud.png";
+import questionmark from "../assets/illustrations/questionmark.png";
+import donut from "../assets/illustrations/donut.png";
+import round from "../assets/illustrations/round.png";
+import plus from "../assets/illustrations/plus.png";
+import star from "../assets/illustrations/star.png";
 
 const HomePage = () => {
   return (
-    <div>
-      <div className="flex flex-col items-center  mt-40">
-        <h1 className=" shadow-effect  outline-text text-giant  text-customGreen passion-one-black ">
+    <div className="flex justify-center items-center h-screen">
+      <div className="relative z-10 flex flex-col items-center ">
+        <h1 className=" text-giant text-black passion-one-black text-center">
           DEV <br />
           ROAST!
         </h1>
         <div>
           <Link to="/instructions">
-            <button className="button-56 mt-32" role="button">
-              Next
+            <button className="button-56 mt-28" role="button">
+              Start Roasting
             </button>
           </Link>
         </div>
       </div>
-
-      <div className="absolute bottom-0 left-0 mb-6 ml-6 ">
-        <Link to="/about">
-          <button className="about-button  bg-customBeige text-black border-black border-2 ">
-            <span className="plus  text-black space-grotesk">About</span>
-          </button>
-        </Link>
+      {/* shapes */}
+      <div className="absolute inset-0 z-0 grid grid-cols-2 grid-rows-2 ">
+        <img
+          src={questionmark}
+          alt="Illustration"
+          className="w-full animate-buzz-infinite"
+          style={{
+            width: "250px",
+            marginLeft: "290px",
+            marginTop: "40px",
+            transform: "rotate(15deg)", // Rotate donut 180 degrees
+          }}
+        />
+        <img
+          src={cloud}
+          alt="Illustration"
+          className="w-full animate-floating"
+          style={{
+            width: "220px",
+            marginTop: "70px",
+            marginLeft: " 180px",
+            transform: "rotate(90deg)", // Rotate donut 180 degrees
+          }}
+        />
+        <img
+          src={star}
+          alt="Illustration"
+          className="w-full animate-spin-infinite"
+          style={{
+            width: "180px",
+            marginLeft: "110px",
+          }}
+        />
+        <img
+          src={donut}
+          alt="Illustration"
+          className="w-full animate-jiggle-infinite"
+          style={{
+            width: "520px",
+            marginTop: "50px",
+            marginLeft: "40px",
+          }}
+        />
+        <img
+          src={plus}
+          alt="Illustration"
+          className="w-full animate-floating-diagonal"
+          style={{
+            width: "220px",
+            marginLeft: "300px",
+            marginBottom: "100px",
+          }}
+        />
+        <img
+          src={round}
+          alt="Illustration"
+          className="w-full animate-jump-and-fall"
+          style={{
+            width: "160px",
+            marginTop: "60px",
+          }}
+        />
       </div>
     </div>
   );
