@@ -37,7 +37,7 @@ function ChooseMode() {
           className="button-56 mr-4"
           role="button"
         >
-          Sarcastic mode
+          Nerds
         </button>
         <button
           onClick={handleClick}
@@ -45,7 +45,7 @@ function ChooseMode() {
           className="button-56 mr-4"
           role="button"
         >
-          Omar mode
+          Berlin
         </button>
         <button
           onClick={handleClick}
@@ -53,7 +53,7 @@ function ChooseMode() {
           className="button-56"
           role="button"
         >
-          Cute mode
+          Countries
         </button>
       </div>
     </div>
