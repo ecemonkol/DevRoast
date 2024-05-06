@@ -10,6 +10,7 @@ export default {
         customBlue: "#216FE7",
 
         customBeige: "#FAFAEE",
+        customRed: "#E82E4D",
       },
       animation: {
         "jiggle-once": "jiggle 0.5s ease-in-out",

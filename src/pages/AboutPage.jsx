@@ -24,7 +24,7 @@ function AboutPage() {
         </a>
         <Link to="/">
           <button className="button-56" role="button">
-            Back
+            Go Back
           </button>
         </Link>
       </div>
