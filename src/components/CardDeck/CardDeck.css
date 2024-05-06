@@ -3,9 +3,14 @@
   border-width: 1.5px;
   border-color: black;
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: center;
 }
 .results-text {
-  font-size: 14px;
+  font-size: 1rem;
+  padding-top: 2rem;
+}
+.text-question {
+  font-size: 1.5rem;
+  padding: 1rem;
 }

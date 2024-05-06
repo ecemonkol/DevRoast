@@ -16,10 +16,14 @@ function CardDeck({ title, content }) {
 
   return (
     <div
-      className={`card-results custom-shadow w-48 h-72 bg-customPink rounded-lg 
-                  transition-all duration-300 ease-in-out 
-                  ${isJiggle ? "animate-jiggle-once" : ""} 
-                  ${isExpanded ? "scale-125" : "scale-100"}`}
+      className={`card-results custom-shadow w-48 h-72 bg-customPink rounded-lg
+                   transition-all duration-300 ease-in-out
+                    ${isJiggle ? "animate-jiggle-once" : ""}
+                    ${
+                      isExpanded
+                        ? "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 absolute scale-125 z-100"
+                        : "relative z-0 scale-100"
+                    }`}
       onClick={handleClick}
     >
       {isExpanded ? (
@@ -31,10 +35,33 @@ function CardDeck({ title, content }) {
           ))}
         </div>
       ) : (
-        <h4>{title}</h4>
+        <div className="text-question">{title}</div>
       )}
     </div>
   );
+  // <div
+  //   className={`card-results custom-shadow w-48 h-72 bg-customPink rounded-lg
+  //          transition-all duration-300 ease-in-out cursor-pointer
+  //          ${isJiggle ? "animate-jiggle" : ""}
+  //          ${
+  //            isExpanded
+  //              ? "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-125 z-100"
+  //              : "relative z-0 scale-100"
+  //          }`}
+  //   onClick={handleClick}
+  // >
+  //   {isExpanded ? (
+  //     <div className="results-text overflow-auto">
+  //       {content.map((item, index) => (
+  //         <ul key={index}>
+  //           <li>{item}</li>
+  //         </ul>
+  //       ))}
+  //     </div>
+  //   ) : (
+  //     <div className="text-question">{title}</div>
+  //   )}
+  // </div>
 }
 
 export default CardDeck;
