@@ -8,8 +8,7 @@ import shine1 from "../assets/illustrations/shine1.png";
 
 function QuestionPage() {
   const navigate = useNavigate();
-  const { surveyId } = useParams();
-  const { order } = useParams();
+  const { surveyId, order } = useParams();
   const [questionText, setQuestionText] = useState(null);
   const [questionId, setQuestionId] = useState(null);
   const [questionOptions, setQuestionOptions] = useState(null);
@@ -17,7 +16,6 @@ function QuestionPage() {
   const [answerInput, setAnswerInput] = useState("");
   const [attemptedEmptyAnswer, setAttemptedEmptyAnswer] = useState(false);
   const [answerTooLong, setAnswerTooLong] = useState(false);
-  const [err, setErr] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [timer, setTimer] = useState(null);
 
@@ -32,7 +30,10 @@ function QuestionPage() {
         setAnswerTooLong(false);
         setTimer(20);
       })
-      .catch((err) => setErr(err))
+      .catch((err) => {
+        console.error("error in fetching questions", err);
+        navigate("*");
+      })
       .finally(() => setIsLoading(false));
   }, [order, surveyId]);
 
@@ -54,7 +55,9 @@ function QuestionPage() {
       .then((resp) => {
         setLastQuestionIndex(resp.data.length);
       })
-      .catch((err) => setErr(err));
+      .catch((err) => {
+        navigate("*");
+      });
   }, [surveyId]);
 
   const handleOnChange = (e) => {
@@ -68,11 +71,9 @@ function QuestionPage() {
     const storedUser = localStorage.getItem("user");
     const currentUser = JSON.parse(storedUser);
     if (!currentUser || !currentUser.id) {
-      setErr(err);
       console.error("User ID not found.");
-      return;
+      navigate("*");
     }
-    if (answerTooLong && !questionOptions) return;
 
     if (answerTooLong && !questionOptions) {
       const answerData = {
@@ -104,15 +105,24 @@ function QuestionPage() {
               answerText: answerInput,
             })
             .then((resp) => handleNextQuestion())
-            .catch((error) => console.error("Error updating answer:", error));
+            .catch((error) => {
+              console.error("Error updating answer:", error);
+              navigate("*");
+            });
         } else {
           axios
             .post(URLanswers, answerData)
             .then((resp) => handleNextQuestion())
-            .catch((error) => console.error("Error saving answer:", error));
+            .catch((error) => {
+              console.error("Error saving answer:", error);
+              navigate("*");
+            });
         }
       })
-      .catch((error) => console.error("Error checking existing answer:", error))
+      .catch((error) => {
+        console.error("Error checking existing answer:", error);
+        navigate("*");
+      })
       .finally(() => setAnswerInput(""));
   };
 
@@ -126,12 +136,6 @@ function QuestionPage() {
     }
   };
 
-  if (err)
-    return (
-      <div className="flex flex-col items-center justify-center h-screen space-y-4 ">
-        Opps, something went wrong.
-      </div>
-    );
   if (isLoading)
     return (
       <div className="wrapper">
@@ -176,6 +180,14 @@ function QuestionPage() {
               type="text"
               value={answerInput}
               onChange={handleOnChange}
+              placeholder={
+                questionText === "Who would use comic sans font?"
+                  ? "Pepe?"
+                  : questionText ===
+                    "What are Stefan, Laura and Pepe doing in that room?"
+                  ? "Cryptomining?"
+                  : ""
+              }
               className="p-2 border-2 border-black rounded-md w-40 h-12 text-center mx-auto"
               style={{ display: "block" }}
             />

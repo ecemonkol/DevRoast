@@ -16,10 +16,10 @@ function ChooseMode() {
         })
         .catch((error) => {
           console.error("Error updating user data:", error);
-          navigate("/error");
+          navigate("*");
         });
     } else {
-      navigate("/error");
+      navigate("*");
     }
   };
 
