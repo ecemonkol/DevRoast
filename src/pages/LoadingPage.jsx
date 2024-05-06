@@ -35,6 +35,7 @@ const API_URL = "https://uselessfacts.jsph.pl/random.json?language=en";
 function LoadingPage() {
   const [fact, setFact] = useState("");
   const { surveyId } = useParams();
+  const [timerIsUp, setTimerIsUp] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,6 +47,9 @@ function LoadingPage() {
       }
     };
     fetchData();
+    setTimeout(() => {
+      setTimerIsUp(true);
+    }, 5000);
   }, []);
 
   return (
@@ -57,8 +61,12 @@ function LoadingPage() {
         <p className="text-xl w-60p text-center mt-8">{fact}</p>
 
         <Link to={`/${surveyId}/results`}>
-          <button className="button-56 mt-12" role="button">
-            Skip
+          <button
+            className="button-56 mt-12"
+            role="button"
+            disabled={!timerIsUp}
+          >
+            Results are ready!
           </button>
         </Link>
       </div>

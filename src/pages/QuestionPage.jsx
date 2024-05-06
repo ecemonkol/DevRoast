@@ -72,6 +72,19 @@ function QuestionPage() {
       console.error("User ID not found.");
       return;
     }
+    if (answerTooLong) return;
+
+    if (answerTooLong) {
+      const answerData = {
+        questionId: parseInt(questionId),
+        questionText: questionText,
+        answerText: "",
+        userId: parseInt(currentUser.id),
+        surveyId: parseInt(surveyId),
+        options: Boolean(questionOptions),
+      };
+    }
+
     axios
       .get(`${URLanswers}?questionId=${questionId}&userId=${currentUser.id}`)
       .then((response) => {
@@ -109,7 +122,7 @@ function QuestionPage() {
       navigate(`/${surveyId}/${nextQuestion}`);
       setAnswerInput("");
     } else {
-      navigate(`/${surveyId}/results`);
+      navigate(`/${surveyId}/loading`);
     }
   };
 
@@ -175,9 +188,9 @@ function QuestionPage() {
           )}
           {questionOptions && (
             <div className="flex flex-col items-start space-y-2">
-              {questionOptions.map((option) => (
+              {questionOptions.map((option, index) => (
                 <RadioOption
-                  key={option}
+                  key={`${option}${index}`}
                   value={option}
                   questionText={questionText}
                   handleOnChange={handleOnChange}
