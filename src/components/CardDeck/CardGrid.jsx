@@ -21,8 +21,7 @@ function CardGrid({ results, totalUsers }) {
     ...Object.entries(freeInputResults).map(([question, answers]) => ({
       question,
 
-      content: answers.filter((answer) => answer.trim() !== "").join(", "),
-
+      content: answers.filter((answer) => answer.trim() !== ""),
     })),
   ];
 

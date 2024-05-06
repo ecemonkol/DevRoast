@@ -29,8 +29,8 @@ function CardDeck({ title, content }) {
       {isExpanded ? (
         <div className="results-text">
           {content.map((item, index) => (
-            <ul>
-              <li key={`${item}${index}`}>{item}</li>
+            <ul key={`${item}${index}`}>
+              <li>{item}</li>
             </ul>
           ))}
         </div>
