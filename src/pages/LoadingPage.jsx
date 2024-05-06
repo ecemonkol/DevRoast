@@ -44,7 +44,6 @@ function LoadingPage() {
             src={getUserAvatar()}
             alt="avatar"
             width={120}
-            marginTop={80}
             className="animate-buzz-infinite"
           />
         )}

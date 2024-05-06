@@ -21,7 +21,6 @@ const ResultsPage = () => {
           const activeUsers = resp.data.filter(
             (user) => user.answers.length > 0
           );
-          console.log(activeUsers);
           setTotalUsers(activeUsers.length);
         })
         .catch(() => {
