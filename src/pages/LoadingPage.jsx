@@ -60,18 +60,19 @@ function LoadingPage() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center mt-56 ">
+    <div className="flex items-center justify-center mt-48 ">
       <div className="max-w-lg flex flex-col items-center space-grotesk">
-        <h3 className="text-5xl text-center text-customGreen ">
+        <h3 className="text-7xl text-center text-black ">
           Random Useless Fact:
         </h3>
-        <p className="text-xl w-60p text-center mt-8">{fact}</p>
+        <p className="text-xl w-60p text-center mt-8 mb-8">{fact}</p>
 
         {!timerIsUp && getUserAvatar() && (
           <img
             src={getUserAvatar()}
             alt="avatar"
             width={120}
+            marginTop={80}
             className="animate-buzz-infinite"
           />
         )}
