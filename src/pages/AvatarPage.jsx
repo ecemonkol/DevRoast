@@ -24,29 +24,29 @@ function ChooseAvatar() {
   };
 
   return (
-    <div className="flex flex-col items-center mt-56">
-      <h1 className="text-5xl mb-4 space-grotesk">Tell us who you are</h1>
-      <div className="flex justify-center mt-16">
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h1 className="text-7xl mb-4 space-grotesk">Choose your avatar</h1>
+      <div className="flex justify-center mt-8">
         <img
           src={avatar1}
           alt="image1"
           onClick={handleClick}
           className="cursor-pointer"
-          width={50}
+          width={120}
         />
         <img
           src={avatar2}
           alt="image2"
           onClick={handleClick}
           className="cursor-pointer ml-4"
-          width={50}
+          width={120}
         />
         <img
           src={avatar3}
           alt="image3"
           onClick={handleClick}
           className="cursor-pointer ml-4"
-          width={50}
+          width={120}
         />
       </div>
     </div>
