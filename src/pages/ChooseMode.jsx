@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function ChooseMode() {
   const URLusers = "https://questions-server.adaptable.app/users";
@@ -28,9 +29,9 @@ function ChooseMode() {
     updateUser(+surveyId);
   };
   return (
-    <div className="flex flex-col items-center mt-56 h-screen">
-      <h1 className="text-5xl mb-4 space-grotesk">Choose the Mode</h1>
-      <div className="flex flex-row mt-24">
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h1 className="text-7xl mb-4 space-grotesk">Choose the Mode</h1>
+      <div className="flex flex-row mt-8">
         <button
           onClick={handleClick}
           value={1}
@@ -56,6 +57,11 @@ function ChooseMode() {
           Countries
         </button>
       </div>
+      <Link to="/">
+        <button className="button-56  mt-24" role="button">
+          Go Back
+        </button>
+      </Link>
     </div>
   );
 }

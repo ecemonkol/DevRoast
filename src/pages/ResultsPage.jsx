@@ -5,7 +5,7 @@ import CardGrid from "../components/CardDeck/CardGrid";
 
 const URLanswers = "https://questions-server.adaptable.app/answers";
 
-function ResultsPage() {
+const ResultsPage = () => {
   const [totalUsers, setTotalUsers] = useState(null);
   const [results, setResults] = useState(null);
   const [questions, setQuestions] = useState();
@@ -121,6 +121,6 @@ function ResultsPage() {
       </>
     </div>
   );
-}
+};
 
 export default ResultsPage;

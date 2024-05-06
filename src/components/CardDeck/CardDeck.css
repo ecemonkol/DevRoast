@@ -1,20 +1,16 @@
-.expanded {
-  transition: all 0.3s ease;
-  width: 96px;
-  height: 144px;
-  overflow: hidden;
+.card-results {
+  background-color: #fafaee;
+  border-width: 1.5px;
+  border-color: black;
+  display: flex;
+  align-items: start;
+  justify-content: center;
 }
-
-.animate-jiggle {
-  animation: jiggle 0.5s infinite;
+.results-text {
+  font-size: 1rem;
+  padding-top: 2rem;
 }
-
-@keyframes jiggle {
-  0%,
-  100% {
-    transform: rotate(-3deg);
-  }
-  50% {
-    transform: rotate(3deg);
-  }
+.text-question {
+  font-size: 1.5rem;
+  padding: 1rem;
 }
