@@ -8,7 +8,6 @@ function CardGrid({ results, totalUsers }) {
     freeInputResults: {},
   };
 
-  // Combine all results into an array for rendering
   const combinedResults = [
     ...Object.entries(optionResults).map(([question, answers]) => ({
       question,
@@ -21,7 +20,9 @@ function CardGrid({ results, totalUsers }) {
     })),
     ...Object.entries(freeInputResults).map(([question, answers]) => ({
       question,
-      content: answers,
+
+      content: answers.filter((answer) => answer.trim() !== "").join(", "),
+
     })),
   ];
 

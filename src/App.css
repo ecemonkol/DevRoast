@@ -18,7 +18,6 @@
   display: flex;
   flex-direction: column;
 }
-
 .main {
   margin: 100px auto;
   width: 400px;
@@ -221,6 +220,11 @@ body {
 
 .button-56:hover {
   outline: 0;
+}
+
+.button-56:disabled {
+  outline: 0;
+  background-color: #e2e2e2;
 }
 
 @media (min-width: 768px) {

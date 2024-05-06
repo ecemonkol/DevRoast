@@ -30,7 +30,7 @@ function QuestionPage() {
         setQuestionOptions(resp.data[0].options);
         setAttemptedEmptyAnswer(false);
         setAnswerTooLong(false);
-        setTimer(10);
+        setTimer(20);
       })
       .catch((err) => setErr(err))
       .finally(() => setIsLoading(false));
@@ -39,7 +39,7 @@ function QuestionPage() {
   useEffect(() => {
     if (timer === 0) {
       handleSendAnswer();
-      setTimer(10);
+      setTimer(20);
     } else {
       const timerInterval = setInterval(() => {
         setTimer((prevTimer) => prevTimer - 1);
@@ -72,6 +72,19 @@ function QuestionPage() {
       console.error("User ID not found.");
       return;
     }
+    if (answerTooLong && !questionOptions) return;
+
+    if (answerTooLong && !questionOptions) {
+      const answerData = {
+        questionId: parseInt(questionId),
+        questionText: questionText,
+        answerText: "",
+        userId: parseInt(currentUser.id),
+        surveyId: parseInt(surveyId),
+        options: Boolean(questionOptions),
+      };
+    }
+
     axios
       .get(`${URLanswers}?questionId=${questionId}&userId=${currentUser.id}`)
       .then((response) => {
@@ -109,7 +122,7 @@ function QuestionPage() {
       navigate(`/${surveyId}/${nextQuestion}`);
       setAnswerInput("");
     } else {
-      navigate(`/${surveyId}/results`);
+      navigate(`/${surveyId}/loading`);
     }
   };
 
@@ -163,21 +176,25 @@ function QuestionPage() {
               type="text"
               value={answerInput}
               onChange={handleOnChange}
-              className="p-2 border-2 border-black rounded-md w-40 h-12 text-center mx-auto"
+              className="p-2 border-2 border-black rounded-md w-52 h-12 text-center mx-auto"
               style={{ display: "block" }}
             />
           )}
           {attemptedEmptyAnswer && (
-            <p className="text-red-500">Opps, I can't see your answer 😞</p>
+            <p className="text-customRed text-center mt-2">
+              Opps, I can't see your answer 😞
+            </p>
           )}
-          {answerTooLong && (
-            <p className="text-red-500">Hehe, try a shorter answer 😉</p>
+          {answerTooLong && !questionOptions && (
+            <p className="text-customRed text-center mt-2">
+              Hehe, try a shorter answer 😉
+            </p>
           )}
           {questionOptions && (
-            <div className="flex flex-col items-start space-y-2">
-              {questionOptions.map((option) => (
+            <div className="flex flex-col items-start ">
+              {questionOptions.map((option, index) => (
                 <RadioOption
-                  key={option}
+                  key={`${option}${index}`}
                   value={option}
                   questionText={questionText}
                   handleOnChange={handleOnChange}
@@ -199,8 +216,8 @@ function QuestionPage() {
         <div
           className="absolute left-0 top-0 bottom-0 bg-customPink border-2 border-black rounded-full"
           style={{
-            width: `${(10 - timer) * 10}%`,
-            transition: (10 - timer) * 10 === 0 ? "none" : "width 1s linear",
+            width: `${(20 - timer) * 5}vw `, // Adjusted for a starting time of 20 seconds
+            transition: timer === 20 ? "none" : "width 1s linear", // Transition only if timer is not 20 seconds
           }}
         ></div>
       </div>

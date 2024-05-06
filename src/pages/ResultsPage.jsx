@@ -96,9 +96,7 @@ const ResultsPage = () => {
           });
           console.log({ optionResults, freeInputResults });
           setResults({ optionResults, freeInputResults });
-          setTimeout(() => {
-            setIsLoading(false);
-          }, 5000); // Display loading page for at least 5 seconds
+          setIsLoading(false);
         } catch (error) {
           setErr(error);
         }
@@ -113,22 +111,24 @@ const ResultsPage = () => {
         Opps, something went wrong.
       </div>
     );
-  if (isLoading) return <LoadingPage />;
+  if (isLoading)
+    return (
+      <div className="wrapper">
+        <div className="loader">
+          <div className="loading one"></div>
+          <div className="loading two"></div>
+          <div className="loading three"></div>
+          <div className="loading four"></div>
+        </div>
+      </div>
+    );
 
   return (
-    <div className="results-page-wrapper">
-      <div className="flex flex-col justify-center items-center h-screen px-4 space-grotesk">
-        {isLoading ? (
-          <div>Loading...</div>
-        ) : err ? (
-          <div>Oops, something went wrong.</div>
-        ) : (
-          <>
-            <CardGrid results={results} totalUsers={totalUsers} />
-            <div>TOTAL USERS: {totalUsers}</div>
-          </>
-        )}
-      </div>
+    <div className="flex flex-col justify-center items-center h-screen px-4 space-grotesk">
+      <>
+        <CardGrid results={results} totalUsers={totalUsers} />
+        <div>TOTAL USERS: {totalUsers}</div>
+      </>
     </div>
   );
 };
