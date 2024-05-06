@@ -23,11 +23,10 @@ function CardDeck({ title, content }) {
     >
       {isExpanded ? (
         <div className="p-4">
-          <h3>{title}</h3>
           <p>{content}</p>
         </div>
       ) : (
-        <p>Click me!</p>
+        <h4>{title}</h4>
       )}
     </div>
   );

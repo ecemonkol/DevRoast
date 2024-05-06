@@ -6,7 +6,6 @@ import CardDeck from "../components/CardDeck/CardDeck";
 import LoadingPage from "./LoadingPage";
 import CardGrid from "../components/CardDeck/CardGrid";
 
-
 const URLanswers = "https://questions-server.adaptable.app/answers";
 
 function ResultsPage() {
