@@ -30,7 +30,7 @@ function QuestionPage() {
         setQuestionOptions(resp.data[0].options);
         setAttemptedEmptyAnswer(false);
         setAnswerTooLong(false);
-        setTimer(10);
+        setTimer(20);
       })
       .catch((err) => setErr(err))
       .finally(() => setIsLoading(false));
@@ -39,7 +39,7 @@ function QuestionPage() {
   useEffect(() => {
     if (timer === 0) {
       handleSendAnswer();
-      setTimer(10);
+      setTimer(20);
     } else {
       const timerInterval = setInterval(() => {
         setTimer((prevTimer) => prevTimer - 1);
@@ -212,8 +212,8 @@ function QuestionPage() {
         <div
           className="absolute left-0 top-0 bottom-0 bg-customPink border-2 border-black rounded-full"
           style={{
-            width: `${(10 - timer) * 10}%`,
-            transition: (10 - timer) * 10 === 0 ? "none" : "width 1s linear",
+            width: `${(20 - timer) * 5}vw `, // Adjusted for a starting time of 20 seconds
+            transition: timer === 20 ? "none" : "width 1s linear", // Transition only if timer is not 20 seconds
           }}
         ></div>
       </div>
