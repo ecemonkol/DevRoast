@@ -19,7 +19,7 @@ function QuestionPage() {
   const [answerTooLong, setAnswerTooLong] = useState(false);
   const [err, setErr] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(null);
 
   useEffect(() => {
     axios
@@ -37,23 +37,31 @@ function QuestionPage() {
   }, [order, surveyId]);
 
   useEffect(() => {
-    const timerInterval = setInterval(() => {
-      setTimer((prevTimer) => {
-        if (prevTimer === 0) {
-          clearInterval(timerInterval);
-          if (!answerInput.trim()) {
-            handleSendAnswer();
-          } else {
-            handleNextQuestion();
-          }
-          return 10;
-        }
-        return prevTimer - 1;
-      });
-    }, 1000);
+    if (timer === 0) {
+      handleSendAnswer();
+      setTimer(10);
+    } else {
+      const timerInterval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+      return () => clearInterval(timerInterval);
+    }
+  }, [timer]);
 
-    return () => clearInterval(timerInterval);
-  }, [timer, order]);
+  // useEffect(() => {
+  //   const timerInterval = setInterval(() => {
+  //     setTimer((prevTimer) => {
+  //       if (prevTimer === 0) {
+  //         clearInterval(timerInterval);
+  //         handleSendAnswer();
+  //         return 10;
+  //       }
+  //       return prevTimer - 1;
+  //     });
+  //   }, 1000);
+
+  //   return () => clearInterval(timerInterval);
+  // }, [timer, order]);
 
   useEffect(() => {
     axios
@@ -74,44 +82,40 @@ function QuestionPage() {
   const handleSendAnswer = () => {
     const storedUser = localStorage.getItem("user");
     const currentUser = JSON.parse(storedUser);
-
+    if (!currentUser || !currentUser.id) {
+      setErr(err);
+      console.error("User ID not found.");
+      return;
+    }
     axios
       .get(`${URLanswers}?questionId=${questionId}&userId=${currentUser.id}`)
-      .then((resp) => {
-        if (resp.data.length > 0) {
-          const existingAnswer = resp.data[0];
-          const updatedAnswer = {
-            ...existingAnswer,
-            answerText: answerInput,
-          };
+      .then((response) => {
+        const answerExists = response.data.length > 0;
+        const answerData = {
+          questionId: parseInt(questionId),
+          questionText: questionText,
+          answerText: answerInput,
+          userId: parseInt(currentUser.id),
+          surveyId: parseInt(surveyId),
+          options: Boolean(questionOptions),
+        };
+        if (answerExists) {
+          const existingAnswer = response.data[0];
           axios
-            .patch(`${URLanswers}/${existingAnswer.id}`, updatedAnswer)
+            .patch(`${URLanswers}/${existingAnswer.id}`, {
+              answerText: answerInput,
+            })
             .then((resp) => handleNextQuestion())
-            .catch((err) => {
-              console.error("error updating answer");
-              setErr(err);
-            });
+            .catch((error) => console.error("Error updating answer:", error));
         } else {
-          const newAnswer = {
-            id: Date.now(),
-            questionId: questionId,
-            questionText: questionText,
-            answerText: answerInput,
-            userId: +currentUser.id,
-            surveyId: +surveyId,
-            options: Boolean(questionOptions),
-          };
           axios
-            .post(URLanswers, newAnswer)
+            .post(URLanswers, answerData)
             .then((resp) => handleNextQuestion())
-            .catch((err) => setErr(err));
+            .catch((error) => console.error("Error saving answer:", error));
         }
       })
-      .catch((err) => {
-        console.error("error saving answer");
-        setErr(err);
-      })
-      .finally((resp) => setAnswerInput(""));
+      .catch((error) => console.error("Error checking existing answer:", error))
+      .finally(() => setAnswerInput(""));
   };
 
   const handleNextQuestion = () => {
