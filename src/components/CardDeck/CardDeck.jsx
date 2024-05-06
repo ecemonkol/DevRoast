@@ -21,10 +21,11 @@ function CardDeck({ title, content }) {
                     ${isJiggle ? "animate-jiggle-once" : ""}
                     ${
                       isExpanded
-                        ? "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 absolute scale-125 z-100"
-                        : "relative z-0 scale-100"
+                        ? "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 absolute scale-125"
+                        : "scale-100"
                     }`}
       onClick={handleClick}
+      style={{ zIndex: isExpanded ? 100 : 1 }}
     >
       {isExpanded ? (
         <div className="results-text">
