@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
-import CardDeck from "../components/CardDeck/CardDeck";
-import LoadingPage from "./LoadingPage";
 import CardGrid from "../components/CardDeck/CardGrid";
 
 const URLanswers = "https://questions-server.adaptable.app/answers";
@@ -13,7 +10,6 @@ const ResultsPage = () => {
   const [results, setResults] = useState(null);
   const [questions, setQuestions] = useState();
   const { surveyId } = useParams();
-  const [err, setErr] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -29,8 +25,8 @@ const ResultsPage = () => {
           setTotalUsers(activeUsers.length);
         })
         .catch(() => {
-          setErr(err);
           console.error("problem fetching total users", err);
+          navigate("*");
         });
     };
     getTotalUsers();
@@ -45,7 +41,7 @@ const ResultsPage = () => {
         const allQuestions = resp.data.questions;
         setQuestions(allQuestions);
       } catch (error) {
-        setErr(error);
+        navigate("*");
       }
     };
     fetchQuestions();
@@ -98,19 +94,13 @@ const ResultsPage = () => {
           setResults({ optionResults, freeInputResults });
           setIsLoading(false);
         } catch (error) {
-          setErr(error);
+          navigate("*");
         }
       };
       getResults();
     }
   }, [questions, surveyId]);
 
-  if (err)
-    return (
-      <div className=" body-results-page flex flex-col items-center justify-center h-screen space-y-4 ">
-        Opps, something went wrong.
-      </div>
-    );
   if (isLoading)
     return (
       <div className="wrapper">
