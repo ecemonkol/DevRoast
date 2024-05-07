@@ -114,16 +114,19 @@ const ResultsPage = () => {
     );
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen px-4 space-grotesk">
-      <>
+    <div>
+      <div className="flex justify-end px-4 mt-4 mr-4 space-grotesk">
+        TOTAL USERS: {totalUsers}
+      </div>
+      <div className="flex flex-col items-center mt-2 h-screen px-4 space-grotesk">
         <CardGrid results={results} totalUsers={totalUsers} />
-        <div>TOTAL USERS: {totalUsers}</div>
+
         <Link to="/">
-          <button className="button-56" role="button">
+          <button className="button-56 mt-4" role="button">
             Go Home
           </button>
         </Link>
-      </>
+      </div>
     </div>
   );
 };

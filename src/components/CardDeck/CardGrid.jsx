@@ -27,8 +27,8 @@ function CardGrid({ results, totalUsers }) {
 
   return (
     <div className="CardGrid overflow-visible">
-      <div className="p-1 max-w-5xl w-full">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-14 gap-y-10">
+      <div className="p-1 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-14 gap-y-8">
           {combinedResults.map((result, index) => (
             <div key={index} className="card">
               <CardDeck title={result.question} content={result.content} />
