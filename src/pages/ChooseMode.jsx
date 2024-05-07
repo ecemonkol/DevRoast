@@ -35,7 +35,7 @@ function ChooseMode() {
         <button
           onClick={handleClick}
           value={1}
-          className="button-56 mr-4"
+          className="button-56-p mr-4"
           role="button"
         >
           Nerds
@@ -43,7 +43,7 @@ function ChooseMode() {
         <button
           onClick={handleClick}
           value={2}
-          className="button-56  mr-4"
+          className="button-56-p  mr-4"
           role="button"
         >
           Berlin
