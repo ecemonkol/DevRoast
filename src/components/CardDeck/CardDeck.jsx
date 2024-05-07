@@ -16,7 +16,7 @@ function CardDeck({ title, content }) {
 
   return (
     <div
-      className={`card-results custom-shadow w-48 h-72 bg-customPink rounded-lg
+      className={`card-results custom-shadow w-48 h-72  overflow-scroll rounded-lg
                    transition-all duration-300 ease-in-out
                     ${isJiggle ? "animate-jiggle-once" : ""}
                     ${
@@ -28,18 +28,21 @@ function CardDeck({ title, content }) {
       style={{ zIndex: isExpanded ? 100 : 1 }}
     >
       {isExpanded ? (
-        <div className="results-text">
+        <div className="results-text w-full">
           {content.map((item, index) => (
-            <ul key={`${item}${index}`}>
+            <ul className="  flex  w-full" key={`${item}${index}`}>
               {item.includes("%") ? (
-                <li className="flex justify-between border-2 border-black px-6 mx-4 bg-customGreen rounded-lg">
+                <li
+                  className="mb-2 flex flex-row px-2 justify-between items-center 
+                border border-black  bg-customGreen rounded-lg w-full"
+                >
                   <span className="text-sm">{item.match(/[^\d%]+/)[0]}</span>
                   <span className=" text-xm ">
                     {item.slice(-4) == "100%" ? "100%" : item.slice(-3)}
                   </span>
                 </li>
               ) : (
-                <li className="border-2 border-black px-6 mx-4 bg-customGreen rounded-lg">
+                <li className=" break-words mb-2 border px-2 items-center w-full border-black   bg-customGreen rounded-lg">
                   <span className="text">{item}</span>
                 </li>
               )}

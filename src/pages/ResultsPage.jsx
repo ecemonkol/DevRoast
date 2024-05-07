@@ -120,7 +120,7 @@ const ResultsPage = () => {
         <div>TOTAL USERS: {totalUsers}</div>
         <Link to="/">
           <button className="button-56" role="button">
-            Go Back
+            Go Home
           </button>
         </Link>
       </>
