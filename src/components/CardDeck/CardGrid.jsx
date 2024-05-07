@@ -13,9 +13,9 @@ function CardGrid({ results, totalUsers }) {
       question,
       content: Object.entries(answers).map(
         ([answerText, count]) =>
-          `${answerText || "No answer"} - (${Math.round(
+          `${answerText || "No answer"} ${Math.round(
             (count / totalUsers) * 100
-          )}%)`
+          )}%`
       ),
     })),
     ...Object.entries(freeInputResults).map(([question, answers]) => ({

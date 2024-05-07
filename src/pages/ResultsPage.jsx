@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import CardGrid from "../components/CardDeck/CardGrid";
+import { Link } from "react-router-dom";
 
 const URLanswers = "https://questions-server.adaptable.app/answers";
 
@@ -117,6 +118,11 @@ const ResultsPage = () => {
       <>
         <CardGrid results={results} totalUsers={totalUsers} />
         <div>TOTAL USERS: {totalUsers}</div>
+        <Link to="/">
+          <button className="button-56" role="button">
+            Go Back
+          </button>
+        </Link>
       </>
     </div>
   );

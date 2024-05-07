@@ -21,7 +21,7 @@ function CardDeck({ title, content }) {
                     ${isJiggle ? "animate-jiggle-once" : ""}
                     ${
                       isExpanded
-                        ? "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 absolute scale-125"
+                        ? "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-125"
                         : "scale-100"
                     }`}
       onClick={handleClick}
@@ -31,7 +31,18 @@ function CardDeck({ title, content }) {
         <div className="results-text">
           {content.map((item, index) => (
             <ul key={`${item}${index}`}>
-              <li>{item}</li>
+              {item.includes("%") ? (
+                <li className="flex justify-between border-2 border-black px-6 mx-4 bg-customGreen rounded-lg">
+                  <span className="text-sm">{item.match(/[^\d%]+/)[0]}</span>
+                  <span className=" text-xm ">
+                    {item.slice(-4) == "100%" ? "100%" : item.slice(-3)}
+                  </span>
+                </li>
+              ) : (
+                <li className="border-2 border-black px-6 mx-4 bg-customGreen rounded-lg">
+                  <span className="text">{item}</span>
+                </li>
+              )}
             </ul>
           ))}
         </div>
