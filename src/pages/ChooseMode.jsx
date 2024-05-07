@@ -48,14 +48,6 @@ function ChooseMode() {
         >
           Berlin
         </button>
-        <button
-          onClick={handleClick}
-          value={3}
-          className="button-56 flex-grow"
-          role="button"
-        >
-          Countries
-        </button>
       </div>
       <Link to="/">
         <button className="button-56  mt-24" role="button">
