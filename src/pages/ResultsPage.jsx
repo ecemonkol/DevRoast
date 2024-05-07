@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import CardGrid from "../components/CardDeck/CardGrid";
+import { Link } from "react-router-dom";
 
 const URLanswers = "https://questions-server.adaptable.app/answers";
 
@@ -113,11 +114,19 @@ const ResultsPage = () => {
     );
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen px-4 space-grotesk">
-      <>
+    <div>
+      <div className="flex justify-end px-4 mt-4 mr-4 space-grotesk">
+        TOTAL USERS: {totalUsers}
+      </div>
+      <div className="flex flex-col items-center mt-2 h-screen px-4 space-grotesk">
         <CardGrid results={results} totalUsers={totalUsers} />
-        <div>TOTAL USERS: {totalUsers}</div>
-      </>
+
+        <Link to="/">
+          <button className="button-56 mt-4" role="button">
+            Go Home
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };
