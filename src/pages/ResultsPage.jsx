@@ -93,6 +93,7 @@ const ResultsPage = () => {
           console.log({ optionResults, freeInputResults });
           setResults({ optionResults, freeInputResults });
           setIsLoading(false);
+          localStorage.removeItem("user");
         } catch (error) {
           navigate("*");
         }
@@ -121,9 +122,9 @@ const ResultsPage = () => {
       <div className="flex flex-col items-center mt-2 h-screen px-4 space-grotesk">
         <CardGrid results={results} totalUsers={totalUsers} />
 
-        <Link to="/">
+        <Link to="/choose-mode">
           <button className="button-56 mt-4" role="button">
-            Go Home
+            Start over
           </button>
         </Link>
       </div>

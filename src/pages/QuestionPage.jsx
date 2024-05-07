@@ -64,7 +64,7 @@ function QuestionPage() {
     const inputValue = e.target.value;
     setAnswerInput(inputValue);
     setAttemptedEmptyAnswer(!inputValue.trim());
-    setAnswerTooLong(inputValue.length > 20);
+    setAnswerTooLong(inputValue.length > 40);
   };
 
   const handleSendAnswer = () => {
@@ -233,9 +233,3 @@ function QuestionPage() {
 }
 
 export default QuestionPage;
-
-// "/"
-// "/choose-avatar"
-// "/choose-mode"
-// "/choose-mode/instruction/:surveyID"
-// "/choose-mode/:surveyID/start/:pageNumber"
