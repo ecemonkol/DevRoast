@@ -5,7 +5,7 @@ import questionmark from "../assets/illustrations/questionmark.png";
 import donut from "../assets/illustrations/donut.png";
 import round from "../assets/illustrations/round.png";
 import plus from "../assets/illustrations/plus.png";
-import star from "../assets/illustrations/star.png";
+import starlink from "../assets/illustrations/starlink.png";
 
 const HomePage = () => {
   return (
@@ -47,15 +47,18 @@ const HomePage = () => {
             transform: "rotate(90deg)", // Rotate donut 180 degrees
           }}
         />
-        <img
-          src={star}
-          alt="Illustration"
-          className="w-full animate-spin-infinite"
-          style={{
-            width: "180px",
-            marginLeft: "110px",
-          }}
-        />
+        <Link to="https://github.com/ecemonkol/questions-app" target="_blank">
+          <img
+            src={starlink}
+            alt="Illustration"
+            cursor="pointer"
+            className="w-full animate-spin-infinite"
+            style={{
+              width: "180px",
+              marginLeft: "110px",
+            }}
+          />
+        </Link>
         <img
           src={donut}
           alt="Illustration"
