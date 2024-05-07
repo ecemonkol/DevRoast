@@ -25,10 +25,13 @@ function CardDeck({ title, content }) {
                         : "scale-100"
                     }`}
       onClick={handleClick}
-      style={{ zIndex: isExpanded ? 100 : 1 }}
+      style={{
+        zIndex: isExpanded ? 100 : 1,
+        background: isExpanded ? "#FD78AF" : "#FAFAEE",
+      }}
     >
       {isExpanded ? (
-        <div className="results-text   bg-customPink w-full h-full">
+        <div className="results-text   bg-customPink w-full ">
           {content.map((item, index) => (
             <ul className=" flex  w-full" key={`${item}${index}`}>
               {item.includes("%") ? (
