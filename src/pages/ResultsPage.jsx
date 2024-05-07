@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import CardGrid from "../components/CardDeck/CardGrid";
 import { Link } from "react-router-dom";
 
@@ -12,6 +12,7 @@ const ResultsPage = () => {
   const [questions, setQuestions] = useState();
   const { surveyId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getTotalUsers = () => {
