@@ -8,14 +8,14 @@ function InstructionPage() {
       <div className="flex flex-col items-center ">
         <h1 className="space-grotesk text-7xl mt-48">Instructions</h1>
         <p className="list-none space-grotesk text-xl mt-12 text-center">
-          <li>1. Select a mode and blablaa</li>
+          <li>1. Select a mode and choose an avatar</li>
           <li>2. Don't be lethargic and answer the questions on time</li>
           <li>3. Enjoy the results</li>
         </p>
         <div></div>
         <Link to="/choose-avatar">
           <button className="button-56  mt-10" role="button">
-            Start
+            Got it
           </button>
         </Link>
         <Link to="/">

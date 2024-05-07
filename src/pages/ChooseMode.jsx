@@ -43,18 +43,10 @@ function ChooseMode() {
         <button
           onClick={handleClick}
           value={2}
-          className="button-56 mr-4"
+          className="button-56  mr-4"
           role="button"
         >
           Berlin
-        </button>
-        <button
-          onClick={handleClick}
-          value={3}
-          className="button-56"
-          role="button"
-        >
-          Countries
         </button>
       </div>
       <Link to="/">

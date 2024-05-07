@@ -49,7 +49,7 @@ function LoadingPage() {
         )}
         {timerIsUp && (
           <Link to={`/${surveyId}/results`}>
-            <button className="button-56 mt-12" role="button">
+            <button className="button-56 " role="button">
               Results are ready!
             </button>
           </Link>

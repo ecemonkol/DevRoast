@@ -31,21 +31,21 @@ function ChooseAvatar() {
           src={avatar1}
           alt="image1"
           onClick={handleClick}
-          className="cursor-pointer"
+          className="cursor-pointer transition duration-300 hover:scale-110"
           width={120}
         />
         <img
           src={avatar2}
           alt="image2"
           onClick={handleClick}
-          className="cursor-pointer ml-4"
+          className="cursor-pointer ml-4 transition duration-300 hover:scale-110"
           width={120}
         />
         <img
           src={avatar3}
           alt="image3"
           onClick={handleClick}
-          className="cursor-pointer ml-4"
+          className="cursor-pointer ml-4 transition duration-300 hover:scale-110"
           width={120}
         />
       </div>
