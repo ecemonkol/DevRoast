@@ -180,17 +180,10 @@ function QuestionPage() {
               type="text"
               value={answerInput}
               onChange={handleOnChange}
-
               placeholder={
-                questionText === "Who would use comic sans font?"
-                  ? "Pepe?"
-                  : questionText ===
-                    "What are Stefan, Laura and Pepe doing in that room?"
-                  ? "Cryptomining?"
-                  : ""
+                questionText === "Who would use comic sans font?" ? "Pepe?" : ""
               }
               className="p-2 border-2 border-black rounded-md w-52 h-12 text-center mx-auto"
-
               style={{ display: "block" }}
             />
           )}
