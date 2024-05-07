@@ -3,10 +3,11 @@ import CardDeck from "./CardDeck";
 // import "./CardDeck.css";
 
 function CardGrid({ results, totalUsers }) {
-  const { optionResults, freeInputResults } = results || {
-    optionResults: {},
-    freeInputResults: {},
-  };
+  if (!results) {
+    navigate("*");
+    return null;
+  }
+  const { optionResults, freeInputResults } = results;
 
   const combinedResults = [
     ...Object.entries(optionResults).map(([question, answers]) => ({
@@ -20,7 +21,6 @@ function CardGrid({ results, totalUsers }) {
     })),
     ...Object.entries(freeInputResults).map(([question, answers]) => ({
       question,
-
       content: answers.filter((answer) => answer.trim() !== ""),
     })),
   ];
