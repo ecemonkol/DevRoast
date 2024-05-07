@@ -15,7 +15,6 @@ function QuestionPage() {
   const [lastQuestionIndex, setLastQuestionIndex] = useState(null);
   const [answerInput, setAnswerInput] = useState("");
   const [attemptedEmptyAnswer, setAttemptedEmptyAnswer] = useState(false);
-  const [answerTooLong, setAnswerTooLong] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [timer, setTimer] = useState(null);
 
@@ -27,7 +26,6 @@ function QuestionPage() {
         setQuestionId(resp.data[0].id);
         setQuestionOptions(resp.data[0].options);
         setAttemptedEmptyAnswer(false);
-        setAnswerTooLong(false);
         setTimer(40);
       })
       .catch((err) => {
@@ -64,7 +62,6 @@ function QuestionPage() {
     const inputValue = e.target.value;
     setAnswerInput(inputValue);
     setAttemptedEmptyAnswer(!inputValue.trim());
-    setAnswerTooLong(inputValue.length > 40);
   };
 
   const handleSendAnswer = () => {
@@ -73,17 +70,6 @@ function QuestionPage() {
     if (!currentUser || !currentUser.id) {
       console.error("User ID not found.");
       navigate("*");
-    }
-
-    if (answerTooLong && !questionOptions) {
-      const answerData = {
-        questionId: parseInt(questionId),
-        questionText: questionText,
-        answerText: "",
-        userId: parseInt(currentUser.id),
-        surveyId: parseInt(surveyId),
-        options: Boolean(questionOptions),
-      };
     }
 
     axios
@@ -181,7 +167,10 @@ function QuestionPage() {
               value={answerInput}
               onChange={handleOnChange}
               placeholder={
-                questionText === "Who would use comic sans font?" ? "Pepe?" : ""
+                questionText ===
+                "What are Stefan, Laura and Pepe doing in that room?"
+                  ? "Cryptomining?"
+                  : ""
               }
               className="p-2 border-2 border-black rounded-md w-52 h-12 text-center mx-auto"
               style={{ display: "block" }}
@@ -190,11 +179,6 @@ function QuestionPage() {
           {attemptedEmptyAnswer && (
             <p className="text-customRed text-center mt-2">
               Opps, I can't see your answer 😞
-            </p>
-          )}
-          {answerTooLong && !questionOptions && (
-            <p className="text-customRed text-center mt-2">
-              Hehe, try a shorter answer 😉
             </p>
           )}
           {questionOptions && (
