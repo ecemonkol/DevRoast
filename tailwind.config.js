@@ -11,7 +11,7 @@ export default {
         customRed: "#E82E4D",
       },
       animation: {
-        "jiggle-once": "jiggle 0.5s ease-in-out",
+        "jiggle-once": "jiggle 0.2s ease-in-out",
         "spin-infinite": "rotate 20s linear infinite",
         floating: "floating 3s ease-in-out infinite",
         "floating-diagonal": "floating-diagonal 2s ease-in-out infinite",

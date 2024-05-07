@@ -16,7 +16,7 @@ function CardDeck({ title, content }) {
 
   return (
     <div
-      className={`card-results custom-shadow w-48 h-72 overflow-scroll rounded-lg 
+      className={`card-results custom-shadow w-48 h-72 overflow-auto rounded-lg 
                    transition-all duration-300 ease-in-out
                     ${isJiggle ? "animate-jiggle-once" : ""}
                     ${
