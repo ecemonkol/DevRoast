@@ -274,8 +274,12 @@ body {
   background-color: #000; /* Sets the inner circle color when checked */
 }
 
-/* text shadow */
+/* text shadow 3D effect */
 
 .shadow-effect {
-  text-shadow: 8px 8px black;
+  text-shadow: 1px 1px rgb(0, 0, 0), 3px 3px rgb(0, 0, 0), 5px 5px rgb(0, 0, 0),
+    7px 7px rgb(0, 0, 0), 9px 9px rgb(0, 0, 0), 11px 11px rgb(0, 0, 0),
+    13px 13px rgb(0, 0, 0), 15px 15px rgb(0, 0, 0), 17px 17px rgb(0, 0, 0),
+    19px 19px rgb(0, 0, 0);
+  line-height: 0.68;
 }

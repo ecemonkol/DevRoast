@@ -11,7 +11,7 @@ const HomePage = () => {
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="relative z-10 flex flex-col items-center ">
-        <h1 className=" text-giant text-black passion-one-black text-center">
+        <h1 className=" text-giant passion-one-black text-center shadow-effect outline-text text-customBeige">
           DEV <br />
           ROAST!
         </h1>

@@ -28,7 +28,7 @@ function QuestionPage() {
         setQuestionOptions(resp.data[0].options);
         setAttemptedEmptyAnswer(false);
         setAnswerTooLong(false);
-        setTimer(20);
+        setTimer(40);
       })
       .catch((err) => {
         console.error("error in fetching questions", err);
@@ -40,7 +40,7 @@ function QuestionPage() {
   useEffect(() => {
     if (timer === 0) {
       handleSendAnswer();
-      setTimer(20);
+      setTimer(40);
     } else {
       const timerInterval = setInterval(() => {
         setTimer((prevTimer) => prevTimer - 1);
@@ -180,7 +180,6 @@ function QuestionPage() {
               type="text"
               value={answerInput}
               onChange={handleOnChange}
-
               placeholder={
                 questionText === "Who would use comic sans font?"
                   ? "Pepe?"
@@ -190,7 +189,6 @@ function QuestionPage() {
                   : ""
               }
               className="p-2 border-2 border-black rounded-md w-52 h-12 text-center mx-auto"
-
               style={{ display: "block" }}
             />
           )}
@@ -230,8 +228,8 @@ function QuestionPage() {
         <div
           className="absolute left-0 top-0 bottom-0 bg-customPink border-2 border-black rounded-full"
           style={{
-            width: `${(20 - timer) * 5}vw `, // Adjusted for a starting time of 20 seconds
-            transition: timer === 20 ? "none" : "width 1s linear", // Transition only if timer is not 20 seconds
+            width: `${(40 - timer) * (100 / 41)}vw`,
+            transition: timer === 40 ? "none" : "width 1s linear",
           }}
         ></div>
       </div>
