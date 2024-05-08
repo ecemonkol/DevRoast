@@ -14,7 +14,7 @@ function InstructionPage() {
         </p>
         <div></div>
         <Link to="/choose-avatar">
-          <button className="button-56  mt-10" role="button">
+          <button className="button-56-p  mt-10" role="button">
             Got it
           </button>
         </Link>

@@ -124,7 +124,7 @@ const ResultsPage = () => {
         <CardGrid results={results} totalUsers={totalUsers} />
 
         <Link to="/choose-mode">
-          <button className="button-56 mt-4" role="button">
+          <button className="button-56-p mt-4" role="button">
             Start over
           </button>
         </Link>
