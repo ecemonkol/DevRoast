@@ -40,7 +40,9 @@ function CardDeck({ title, content }) {
                   className="mb-2 flex flex-row px-2 justify-between items-center
                 border border-black  bg-customGreen rounded-lg w-full"
                 >
-                  <span className="text-sm">{item.match(/[^\d%]+/)[0]}</span>
+                  <span className="text-sm nahrung">
+                    {item.match(/[^\d%]+/)[0]}
+                  </span>
                   <span className=" text-xm ">
                     {item.slice(-4) == "100%" ? "100%" : item.slice(-3)}
                   </span>
