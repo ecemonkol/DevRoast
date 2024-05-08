@@ -123,7 +123,7 @@ const ResultsPage = () => {
       <div className="flex flex-col items-center mt-2 h-screen px-4 space-grotesk">
         <CardGrid results={results} totalUsers={totalUsers} />
 
-        <Link to="/choose-mode">
+        <Link to="/choose-avatar">
           <button className="button-56-p mt-4" role="button">
             Start over
           </button>
