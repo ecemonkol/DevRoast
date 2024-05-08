@@ -15,3 +15,6 @@
   font-size: 1.5rem;
   padding: 1rem;
 }
+.nahrung {
+  overflow-wrap: anywhere !important;
+}
