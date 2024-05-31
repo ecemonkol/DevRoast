@@ -1,0 +1,20 @@
+.card-results {
+  background-color: #fafaee;
+  border-width: 1.5px;
+  border-color: black;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+.results-text {
+  font-size: 1rem;
+  padding-top: 2rem;
+  padding: 1rem;
+}
+.text-question {
+  font-size: 1.5rem;
+  padding: 1rem;
+}
+.nahrung {
+  overflow-wrap: anywhere !important;
+}
